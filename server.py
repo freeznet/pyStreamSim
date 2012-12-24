@@ -16,7 +16,7 @@ print 'start linten'
 rateList = [300,700,1500,2500,3500,7000]
 playTime = 5
 
-dataPacket = ['\x01'*rateList[0]*playTime, '\x01'*rateList[1]*playTime, '\x01'*rateList[2]*playTime, '\x01'*rateList[3]*playTime, '\x01'*rateList[4]*playTime, '\x01'*rateList[5]*playTime]
+dataPacket = ['\x01'*rateList[0]*playTime*1024, '\x01'*rateList[1]*playTime*1024, '\x01'*rateList[2]*playTime*1024, '\x01'*rateList[3]*playTime*1024, '\x01'*rateList[4]*playTime*1024, '\x01'*rateList[5]*playTime*1024]
 
 
 
