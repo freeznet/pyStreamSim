@@ -15,10 +15,15 @@ rateList = [300,700,1500,2500,3500,7000]
 playTime = 5 * 128
 
 dataPacket = [len('\x01'*rateList[0]*playTime), len('\x01'*rateList[1]*playTime), len('\x01'*rateList[2]*playTime), len('\x01'*rateList[3]*playTime), len('\x01'*rateList[4]*playTime), len('\x01'*rateList[5]*playTime)]
-
+downloadDoneList = []
+downloadDonePendList = []
 
 bufferLength = 0;
 nowFragID = 0;
+
+class Block():
+    def __init__(self):
+        return
 
 class fragment():
     def __init__(self, id, rate):
@@ -29,6 +34,7 @@ class fragment():
         self.endDownload = 0
         self.startBuffer = 0
         self.endBuffer = 0
+        self.downDur = 0
 
 class serverConnect(Thread):
     def __init__(self, threadname, serverID,  rate, ptime):
@@ -71,8 +77,27 @@ class serverConnect(Thread):
         dur = time.time() - start
         return recvLen,dur
 
+    def getLastDoneFrag():
+        global downloadDoneList
+        if(len(downloadDoneList)>0):
+            return downloadDoneList[-1]
+        else:
+            return None
+
+    def computeBuffer(self, frag):
+        global downloadDoneList
+        global bufferLength
+        global downloadDonePendList
+        last = getLastDoneFrag()
+        if(last!=None and last.id+1 == frag.id):
+            downloadDoneList.append(frag)
+            bufferLength = bufferLength + frag.playtime - frag.downDur
+            if(frag in downloadDonePendList):
+                downloadDonePendList.remove(frag)
+
     def run(self):
         global nowFragID
+        global bufferLength
         rate = 1
         while True:
             self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -80,10 +105,13 @@ class serverConnect(Thread):
             nowFragID = nowFragID + 1
             tmpFrag = fragment(nowFragID,rate)
             tmpFrag.startDownload = time.time()
+            tmpFrag.startBuffer = bufferLength
             rev, d = self.recv_timeout(rate)
             tmpFrag.endDownload = time.time()
             if(rev>0 and d>0):
-                print self.name,'@',tmpFrag.id,'---> length =' , rev,', time =' , d, 'bw =' , rev/1024/d, 'KB/s timeDiff =',tmpFrag.endDownload-tmpFrag.startDownload
+                print self.name,'@',tmpFrag.id,'---> length =' , rev,', time =' , d, 'bw =' , rev/1024/d, 'KB/s'
+                tmpFrag.downDur = d
+                #computeBuffer(tmpFrag)
                 self.downloaded.append(tmpFrag)
                 rate = rate + 1
                 if rate>6:
@@ -120,4 +148,4 @@ def start(numT):
 
 
 if __name__ == '__main__':
-    start(1)
+    start(2)
