@@ -9,10 +9,10 @@ from threading import Thread
 
 
 sockIndex = 1
-serverList = [['42.121.78.93',1234],['106.186.17.248',1234]]
+serverList = [['42.121.78.93',1234],['106.186.17.248',1234],['127.0.0.1',1234]]
 
 rateList = [300,700,1500,2500,3500,7000]
-playTime = 5
+playTime = 5 * 128
 
 dataPacket = [len('\x01'*rateList[0]*playTime), len('\x01'*rateList[1]*playTime), len('\x01'*rateList[2]*playTime), len('\x01'*rateList[3]*playTime), len('\x01'*rateList[4]*playTime), len('\x01'*rateList[5]*playTime)]
 
@@ -63,8 +63,8 @@ class serverConnect(Thread):
                     total_data.append(data)
                     recvLen = recvLen + len(data)
                     begin = time.time()
-                else:
-                    time.sleep(0.01)
+                #else:
+                #    time.sleep(0.01)
             except:
                 pass
         #print 'length =' , recvLen,', time =' , dur, 'bw =' , recvLen/8/dur
@@ -83,7 +83,7 @@ class serverConnect(Thread):
             rev, d = self.recv_timeout(rate)
             tmpFrag.endDownload = time.time()
             if(rev>0 and d>0):
-                print self.name,'@',tmpFrag.id,'---> length =' , rev,', time =' , d, 'bw =' , rev/8/d, 'timeDiff =',tmpFrag.endDownload-tmpFrag.startDownload
+                print self.name,'@',tmpFrag.id,'---> length =' , rev,', time =' , d, 'bw =' , rev/1024/d, 'KB/s timeDiff =',tmpFrag.endDownload-tmpFrag.startDownload
                 self.downloaded.append(tmpFrag)
                 rate = rate + 1
                 if rate>6:
@@ -120,4 +120,4 @@ def start(numT):
 
 
 if __name__ == '__main__':
-    start(2)
+    start(1)
