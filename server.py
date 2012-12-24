@@ -27,7 +27,22 @@ s.listen(10) #开始监听，参数是队列长度
 while True:
     c, addr = s.accept() #接受一个连接
 
-    print 'Get connection from', addr
-    c.send('This is a simple server') #发送数据
-    print c.recv(1024) #读取数据
+    dataRev = c.recv(256)
+    if(dataRev == 'CLOSE'):
+    	c.close()
+    if(dataRev == 'SEND1'):
+    	print 'Send',rateList[0],'kbps data to',addr[0]
+    	c.send(dataPacket[0])
+    if(dataRev == 'SEND2'):
+    	print 'Send',rateList[1],'kbps data to',addr[0]
+    	c.send(dataPacket[1])
+    if(dataRev == 'SEND3'):
+    	print 'Send',rateList[2],'kbps data to',addr[0]
+    	c.send(dataPacket[2])
+    if(dataRev == 'SEND4'):
+    	print 'Send',rateList[3],'kbps data to',addr[0]
+    	c.send(dataPacket[3])
+    if(dataRev == 'SEND5'):
+    	print 'Send',rateList[4],'kbps data to',addr[0]
+    	c.send(dataPacket[4])
     c.close()
