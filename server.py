@@ -13,10 +13,10 @@ host = ''
 port = 1234
 print 'start linten'
 
-rateList = [300,700,1500,2500,3500]
+rateList = [300,700,1500,2500,3500,7000]
 playTime = 5
 
-dataPacket = ['\x01'*rateList[0]*playTime, '\x01'*rateList[1]*playTime, '\x01'*rateList[2]*playTime, '\x01'*rateList[3]*playTime, '\x01'*rateList[4]*playTime]
+dataPacket = ['\x01'*rateList[0]*playTime, '\x01'*rateList[1]*playTime, '\x01'*rateList[2]*playTime, '\x01'*rateList[3]*playTime, '\x01'*rateList[4]*playTime, '\x01'*rateList[5]*playTime]
 
 
 
@@ -45,4 +45,7 @@ while True:
     if(dataRev == 'SEND5'):
     	print 'Send',rateList[4],'kbps data to',addr[0]
     	c.send(dataPacket[4])
+    if(dataRev == 'SEND6'):
+    	print 'Send',rateList[5],'kbps data to',addr[0]
+    	c.send(dataPacket[5])
     c.close()
