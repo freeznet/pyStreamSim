@@ -21,6 +21,40 @@ downloadDonePendList = []
 bufferLength = 0;
 nowFragID = 0;
 
+class Server():
+    def __init__(self, id, name):
+        self.id = id
+        self.bw = 0
+        self.name = name
+        self.downloadFrag = []
+        self.downloadBlock = []
+    def getBandwidth(self):
+        return self.id
+    def assignFrag(self, f):
+        if(f not in self.downloadFrag):
+            self.downloadFrag.append(f)
+    def assignBlock(self, b):
+        if(b not in self.downloadBlock):
+            self.downloadBlock.append(b)
+
+class ServerList():
+    def __init__(self):
+        self.list = []
+    def addServer(self, s):
+        if(s not in self.list):
+            self.list.append(s)
+    def getServer(self, i):
+        return self.list[i]
+    def resort(self):
+        if(self.list[0] != None and len(self.list)>1):
+            leng = len(self.list)
+            for i in xrange(leng):
+                for j in xrange(leng - 1 - i):
+                    if(self.list[j].getBandwidth() < self.list[j+1].getBandwidth()):
+                        temp = self.list[j]
+                        self.list[j] = self.list[j+1]
+                        self.list[j+1] = temp
+
 class Block():
     def __init__(self):
         return
