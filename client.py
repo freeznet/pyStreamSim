@@ -6,11 +6,14 @@ import os
 import time
 import urllib
 import math
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation 
 from threading import Thread
 
 
 sockIndex = 1
-serverList = [['42.121.78.93',1234],['106.186.17.248',1234],['106.186.20.75',1234],['218.92.0.22',1234],['127.0.0.1',1234]]
+serverList = [['218.92.0.22',1234],['42.121.78.93',1234],['106.186.17.248',1234],['106.186.20.75',1234],['127.0.0.1',1234]]
 
 rateList = [300,700,1500,2500,3500,7000]
 playTime = 5 * 128
@@ -31,6 +34,16 @@ qmin = 10
 qmax = 45
 
 slist = None
+
+fig1 = None
+fig2 = None
+
+timelineData = []
+bufferLengthData = []
+rateData = []
+rateTimelineData = []
+
+allStartTime = 0
 
 class Server():
     def __init__(self, id, name):
@@ -255,7 +268,8 @@ class Buffer(Thread):
         
 
     def run(self):
-        global slist, nowBlock, bufferLength
+        global slist, nowBlock, bufferLength, rateList
+        global timelineData, bufferLengthData, rateData, fig1, fig2, allStartTime, rateTimelineData
         while True:
             if(len(blockList)==0):
                 flg = False
@@ -268,10 +282,14 @@ class Buffer(Thread):
                     b = Block(nowBlock, slist, 1, 5)
                     b.startTime = time.time()
                     b.startBuffer = bufferLength
+                    timelineData.append(time.time() - allStartTime)
+                    bufferLengthData.append(bufferLength)
+                    rateTimelineData.append(time.time() - allStartTime)
+                    rateData.append(rateList[0])
                     blockList.append(b)
                     print 'block',nowBlock,' -> ',b.fragNum
                     nowBlock = nowBlock + 1
-            else:
+            elif(len(blockList)<20):
                 myBlock = blockList[-1]
                 if(myBlock != None and myBlock.isDone==True):
                     myBlock.endTime = time.time()
@@ -279,6 +297,7 @@ class Buffer(Thread):
                     #print frag & compute buffer
                     myBufferLength = myBlock.startBuffer
                     nowProcee = 0
+                    print 'Server','\t','FragID','\t','Rate','\t\t','Down Dur','\t\t','Bandwidth','\t\t','BufferLength'
                     while nowProcee<myBlock.fragNum:
                         nowpro = 0
                         nowtime = 0
@@ -290,15 +309,23 @@ class Buffer(Thread):
                                 nowtime = fra.downDur
                                 myBufferLength = fra.endBuffer
                                 nowProcee = nowProcee + 1 
-                                print fra.downBy.name,fra.id,fra.rateInt,fra.downDur,fra.downBw,fra.endBuffer
+                                print fra.downBy.name,'\t',fra.id,'\t',fra.rateInt,'\t',fra.downDur,'\t',fra.downBw,'KB/s\t',fra.endBuffer
                                 break
                             elif(fra.id==nowProcee and fra.downDur<nowtime):
                                 fra.endBuffer = myBufferLength + 5
                                 #nowtime = fra.downDur
                                 myBufferLength = fra.endBuffer
                                 nowProcee = nowProcee + 1 
-                                print fra.downBy.name,fra.id,fra.rateInt,fra.downDur,fra.downBw,fra.endBuffer
+                                print fra.downBy.name,'\t',fra.id,'\t',fra.rateInt,'\t',fra.downDur,'\t',fra.downBw,'KB/s\t',fra.endBuffer
                                 break
+                    for fra in myBlock.downDoneSeq:
+                        if(rateData[-1]!=fra.rateInt):
+                            rateData.append(rateData[-1])
+                            rateTimelineData.append(fra.endDownload - allStartTime)
+                        timelineData.append(fra.endDownload - allStartTime)
+                        bufferLengthData.append(fra.endBuffer)
+                        rateTimelineData.append(fra.endDownload - allStartTime)
+                        rateData.append(fra.rateInt)
                     bufferLength = myBlock.fragList[-1].endBuffer
                     #start init new block
                     myBlock.endBuffer = bufferLength
@@ -311,6 +338,17 @@ class Buffer(Thread):
                     blockList.append(b)
                     print 'block',nowBlock,' -> ',b.fragNum
                     nowBlock = nowBlock + 1
+            elif(fig1==None):
+                fig1 = plt.subplot(211)
+                fig1.plot(timelineData, bufferLengthData)
+                print rateData
+                print timelineData
+                fig2 = plt.subplot(212)
+                fig2.plot(rateTimelineData,rateData)
+                plt.show()
+            else:
+                break
+
 
 
 class serverConnect(Thread):
@@ -427,6 +465,8 @@ def connToServer ():
             rate = 6
         
 def start(numT):
+    global allStartTime
+    allStartTime = time.time()
     threadname = [ "server_%d" % i for i in range(0, numT) ]
     tasks = []
     for i in range(0,numT):
@@ -439,5 +479,7 @@ def start(numT):
     tasks.append( task )
 
 if __name__ == '__main__':
+    #plt.interactive(True)
+    
     slist = ServerList()
-    start(4)
+    start(3)
