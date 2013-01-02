@@ -5,21 +5,32 @@ import sys
 import os
 import time
 import urllib
+import math
 from threading import Thread
 
 
 sockIndex = 1
-serverList = [['42.121.78.93',1234],['106.186.17.248',1234],['127.0.0.1',1234]]
+serverList = [['42.121.78.93',1234],['106.186.17.248',1234],['106.186.20.75',1234],['218.92.0.22',1234],['127.0.0.1',1234]]
 
 rateList = [300,700,1500,2500,3500,7000]
 playTime = 5 * 128
 
 dataPacket = [len('\x01'*rateList[0]*playTime), len('\x01'*rateList[1]*playTime), len('\x01'*rateList[2]*playTime), len('\x01'*rateList[3]*playTime), len('\x01'*rateList[4]*playTime), len('\x01'*rateList[5]*playTime)]
+# 
 downloadDoneList = []
 downloadDonePendList = []
 
 bufferLength = 0;
 nowFragID = 0;
+
+maxFragNum = 8
+nowBlock = 0
+blockList = []
+
+qmin = 10
+qmax = 45
+
+slist = None
 
 class Server():
     def __init__(self, id, name):
@@ -28,14 +39,25 @@ class Server():
         self.name = name
         self.downloadFrag = []
         self.downloadBlock = []
+        self.downloadedFrag = []
+        self.numofrequest = 0
     def getBandwidth(self):
-        return self.id
+        return self.bw
     def assignFrag(self, f):
         if(f not in self.downloadFrag):
             self.downloadFrag.append(f)
     def assignBlock(self, b):
         if(b not in self.downloadBlock):
             self.downloadBlock.append(b)
+    def getDownloadFragment(self):
+        if(len(self.downloadFrag)>0):
+            return self.downloadFrag[0]
+        else:
+            return None
+    def setDownloaded(self, f):
+        if(f in self.downloadFrag):
+            self.downloadedFrag.append(f)
+            self.downloadFrag.remove(f)
 
 class ServerList():
     def __init__(self):
@@ -54,24 +76,246 @@ class ServerList():
                         temp = self.list[j]
                         self.list[j] = self.list[j+1]
                         self.list[j+1] = temp
+        #for i in range(0,leng):
+        #    print i,'->',self.list[i].name,'->',self.list[i].bw
+
 
 class Block():
-    def __init__(self):
-        return
-
-class fragment():
-    def __init__(self, id, rate):
+    def __init__(self, id, serverlist, rate, playtime):
+        global maxFragNum
         self.id = id
-        self.rate = rateList[rate-1]
-        self.playtime = 5
+        self.servers = serverlist
+        self.serverSize = len(serverlist.list)
+        self.fragList = []
+        self.fragNum = 0
+        self.rate = rate
+        self.playtime = playtime
+        self.isDone = False
+        self.startTime = 0
+        self.endTime = 0
+        self.startBuffer = 0
+        self.endBuffer = 0
+        self.downDoneSeq = []
+        cmin = serverlist.list[self.serverSize-1].getBandwidth()
+        while True:
+            serverlist.list[-1].numofrequest = 1
+            self.fragNum = 1
+            for i in range (0,self.serverSize-1):
+                ci = serverlist.getServer(i).getBandwidth()
+                serverlist.getServer(i).numofrequest = int(self.myFloor(ci,cmin))
+                #print i,serverlist.getServer(i).numofrequest
+                self.fragNum = self.fragNum + serverlist.getServer(i).numofrequest
+            if(self.fragNum>maxFragNum):
+                self.serverSize = self.serverSize - 1
+                cmin = serverlist.list[self.serverSize-1].getBandwidth()
+            else:
+                break
+        #print self.fragNum
+        for i in range(0,self.fragNum):
+            self.initFragment(i)
+        self.doSchedule()
+
+    def initFragment(self, i):
+        f = Fragment(i, self.rate, self.playtime, self)
+        self.fragList.append(f)
+
+    def doSchedule(self):
+        Nk = self.fragNum
+        Smax = self.serverSize
+        #print 'Nk=',Nk,'Smax=',Smax
+        x = [[0 for col in range(Nk)] for row in range(Smax)]
+        for i in range(0,Nk):
+            jstar = 0
+            jlist = [0 for row in range(Smax)]
+            for j in range(0, Smax):
+                jlist[j] = 1 / self.servers.getServer(j).getBandwidth()
+                for t in range(0,i) :
+                    jlist[j] += x[j][t] * (1 / self.servers.getServer(j).getBandwidth());
+            jstar = jlist.index(min(jlist))
+            #print 'jstar=',jstar,'i=',i
+            x[jstar][i] = 1
+            f = self.fragList[i]
+            if(f != None):
+                f.setDownloadBy(self.servers.getServer(jstar))
+                self.servers.getServer(jstar).assignFrag(f)
+        self.x = x
+        # for i in range(0,Smax):
+        #     for j in range(0, Nk):
+        #         print x[i][j],
+        #     print ""
+    def getX(self, server, frag):
+        return self.x[server][frag]
+
+
+    def myFloor(self, a, b):
+        t = a / b
+        x = math.floor(t)
+        if(t-x>0.8):
+            x = x + 1
+        return x
+    def getalphan(self, n):
+        ret= 0
+        p = 0
+        q = 0
+        f = self.fragList[n]
+        for i in range(0, self.serverSize):
+            q = q + self.getX(i, n) * f.downBw
+        for j in range(0, self.serverSize):
+            t = self.getX(j, n)
+            m = 0
+            for i in range(0,n+1):
+                m = m + self.getX(j, i)
+            p = p + (t * m)
+        ret = p / q
+        return ret
+    def getNewRateID(self, rate):
+        global rateList
+        ret = 0
+        temp = rateList[0]
+        for i in range(0,len(rateList)):
+            if(rateList[i]<=rate):
+                temp = rateList[i]
+                ret = i
+        return ret
+
+    def getNewRate(self):
+        global blockList, qmin, qmax
+        pRate = rateList[self.rate-1]
+        newSelect = 0
+        kP = 1.1
+        kD = 0.8
+        if(len(blockList)>=2):
+            lastBlock = blockList[-2]
+            if(self.endBuffer >= qmax or self.endBuffer <= qmin):
+                vk = [0 for col in range(self.fragNum)]
+                if(self.endBuffer <= qmin):
+                    q0 = qmin
+                elif(self.endBuffer >= qmax):
+                    q0 = qmax
+                for i in range (0,self.fragNum):
+                    f = self.fragList[i]
+                    alphaN = self.getalphan(i)
+                    q_fragtEnk = f.endBuffer
+                    q_blockSk = self.startBuffer
+                    q_blockEk = self.endBuffer
+                    fragDownDur = f.downDur
+                    #print f.id,alphaN,q_fragtEnk,q_blockSk,q_blockEk,fragDownDur
+                    vk[i] = ((1/(self.playtime*alphaN)) * kP * (q_blockEk - q0))+ ((1/(self.playtime*alphaN)) * kD * ((q_fragtEnk - q_blockSk) / (fragDownDur)));
+                if(self.endBuffer <= qmin):
+                    vtemp = min(vk)
+                elif(self.endBuffer >= qmax):
+                    vtemp = max(vk)
+
+                newRate = pRate + vtemp
+                #print 'vtemp = ',vtemp, 'newRate = ',newRate
+                newSelect = self.getNewRateID(newRate) + 1
+                if(self.endBuffer<=qmin and newSelect>self.rate):
+                    newSelect = self.rate;
+                elif(self.endBuffer>=qmax and newSelect<self.rate):
+                    newSelect = self.rate;
+                return newSelect
+        return self.rate
+
+
+
+
+class Fragment():
+    def __init__(self, id, rate, playtime, block):
+        self.id = id
+        self.rate = rate
+        self.rateInt = rateList[rate-1]
+        self.playtime = playtime
         self.startDownload = 0
         self.endDownload = 0
         self.startBuffer = 0
         self.endBuffer = 0
         self.downDur = 0
+        self.block = block
+        self.downBy = None
+        self.isDone = False
+        self.downBw = 0
+    def setDownloadBy(self, server):
+        self.downBy = server
+    def setDownloadDone(self):
+        self.isDone = True
+        self.block.downDoneSeq.append(self)
+        allDone = True
+        for f in self.block.fragList:
+            if(f.isDone==False):
+                allDone = False
+        self.block.isDone = allDone
+
+
+
+class Buffer(Thread):
+    def __init__(self):
+        global slist, nowBlock
+        Thread.__init__(self, name="buffer")
+        self.bufferLength = 0
+        
+
+    def run(self):
+        global slist, nowBlock, bufferLength
+        while True:
+            if(len(blockList)==0):
+                flg = False
+                for ser in slist.list:
+                    if(ser.getBandwidth()==0 or ser.getBandwidth()==None):
+                        flg = True
+                # start init first block
+                if(flg == False):
+                    slist.resort()
+                    b = Block(nowBlock, slist, 1, 5)
+                    b.startTime = time.time()
+                    b.startBuffer = bufferLength
+                    blockList.append(b)
+                    print 'block',nowBlock,' -> ',b.fragNum
+                    nowBlock = nowBlock + 1
+            else:
+                myBlock = blockList[-1]
+                if(myBlock != None and myBlock.isDone==True):
+                    myBlock.endTime = time.time()
+                    
+                    #print frag & compute buffer
+                    myBufferLength = myBlock.startBuffer
+                    nowProcee = 0
+                    while nowProcee<myBlock.fragNum:
+                        nowpro = 0
+                        nowtime = 0
+                        for fra in myBlock.downDoneSeq:
+                            # if(fra.id > nowProcee):
+                            #     nowpro = nowpro + 5
+                            if(fra.id==nowProcee and fra.downDur>=nowtime):
+                                fra.endBuffer = myBufferLength + 5 - fra.downDur
+                                nowtime = fra.downDur
+                                myBufferLength = fra.endBuffer
+                                nowProcee = nowProcee + 1 
+                                print fra.downBy.name,fra.id,fra.rateInt,fra.downDur,fra.downBw,fra.endBuffer
+                                break
+                            elif(fra.id==nowProcee and fra.downDur<nowtime):
+                                fra.endBuffer = myBufferLength + 5
+                                #nowtime = fra.downDur
+                                myBufferLength = fra.endBuffer
+                                nowProcee = nowProcee + 1 
+                                print fra.downBy.name,fra.id,fra.rateInt,fra.downDur,fra.downBw,fra.endBuffer
+                                break
+                    bufferLength = myBlock.fragList[-1].endBuffer
+                    #start init new block
+                    myBlock.endBuffer = bufferLength
+                    slist.resort()
+                    newSelect = myBlock.getNewRate()
+                    #print 'getNew Select',newSelect
+                    b = Block(nowBlock, slist, newSelect, 5)
+                    b.startTime = time.time()
+                    b.startBuffer = bufferLength
+                    blockList.append(b)
+                    print 'block',nowBlock,' -> ',b.fragNum
+                    nowBlock = nowBlock + 1
+
 
 class serverConnect(Thread):
     def __init__(self, threadname, serverID,  rate, ptime):
+        global slist
         Thread.__init__(self, name=threadname)
         self.name = threadname
         self.nowRate = rate
@@ -79,6 +323,8 @@ class serverConnect(Thread):
         self.downloaded = []
         self.server = serverID
         self.conn = 0
+        self.s = Server(serverID, threadname)
+        slist.addServer(self.s)
 
     def recv_timeout(self,rate,timeout=2):
         self.conn.setblocking(0)
@@ -132,28 +378,39 @@ class serverConnect(Thread):
     def run(self):
         global nowFragID
         global bufferLength
+        global slist
         rate = 1
-        while True:
+        #test speed
+        if(self.s.getBandwidth()==None or self.s.getBandwidth()==0):
             self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.conn.connect((serverList[self.server][0], serverList[self.server][1]))
-            nowFragID = nowFragID + 1
-            tmpFrag = fragment(nowFragID,rate)
-            tmpFrag.startDownload = time.time()
-            tmpFrag.startBuffer = bufferLength
-            rev, d = self.recv_timeout(rate)
-            tmpFrag.endDownload = time.time()
+            rev, d = self.recv_timeout(1)
             if(rev>0 and d>0):
-                print self.name,'@',tmpFrag.id,'---> length =' , rev,', time =' , d, 'bw =' , rev/1024/d, 'KB/s'
-                tmpFrag.downDur = d
-                #computeBuffer(tmpFrag)
-                self.downloaded.append(tmpFrag)
-                rate = rate + 1
-                if rate>6:
-                    rate = 6
-
-
-
-
+                print 'BW Testing:',self.name,'=' , rev/1024/d, 'KB/s'
+                self.s.bw = rev/1024/d
+        nowFrag = self.s.getDownloadFragment();
+        while True:
+            if(nowFrag!=None):
+                self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                self.conn.connect((serverList[self.server][0], serverList[self.server][1]))
+                nowFrag.startDownload = time.time()
+                nowFrag.startBuffer = bufferLength
+                rate = nowFrag.rate;
+                rev, d = self.recv_timeout(rate)
+                nowFrag.endDownload = time.time()
+                if(rev>0 and d>0):
+                    #bufferLength = bufferLength + 5 - d
+                    #print self.name,nowFrag.id,nowFrag.rateInt,d,int(rev/1024/d),bufferLength
+                    self.s.bw = rev/1024/d
+                    nowFrag.downBw = self.s.bw
+                    nowFrag.downDur = d
+                    nowFrag.setDownloadDone()
+                    #nowFrag.endBuffer = bufferLength
+                    self.s.setDownloaded(nowFrag)
+                    self.downloaded.append(nowFrag)
+            nowFrag = self.s.getDownloadFragment();
+                    
+                
 
 def connToServer ():
     global sockIndex
@@ -169,7 +426,6 @@ def connToServer ():
         if rate>6:
             rate = 6
         
-
 def start(numT):
     threadname = [ "server_%d" % i for i in range(0, numT) ]
     tasks = []
@@ -178,8 +434,10 @@ def start(numT):
         #task.setDaemon( True )
         task.start()
         tasks.append( task )
-
-
+    task = Buffer()
+    task.start()
+    tasks.append( task )
 
 if __name__ == '__main__':
-    start(2)
+    slist = ServerList()
+    start(4)
