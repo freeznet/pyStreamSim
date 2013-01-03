@@ -558,13 +558,14 @@ class BWSetter(Thread):
         self.settime = [[0,2],[2,0.5],[1,2],[0,0.5],[1,0.5],[2,0.7],[0,2],[2,0.5]]
     def run(self):
         global serverLimit
+        baseline = [62.5* 8 * 1024,125* 8 * 1024,187.5* 8 * 1024]
         while True:
             timeDiff = int(time() - self.mystart)
             if(timeDiff in self.timeset):
                 print 'start set bw!'
                 index = self.timeset.index(timeDiff)
                 setdata = self.settime[index]
-                serverLimit[setdata[0]] = serverLimit[setdata[0]] * setdata[1]
+                serverLimit[setdata[0]] = baseline[setdata[0]] * setdata[1]
                 t = self.sertask[setdata[0]]
                 if(t.conn!=None and t.conn!=0):
                     t.conn.setLimit(serverLimit[setdata[0]])
