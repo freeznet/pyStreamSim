@@ -21,7 +21,7 @@ initSpeed = [500.0, 1000.0, 1500.0]
 
 speedSetting1 = []
 speedSetting2 = []
-speedSetting3 = [[15,23,0.5],[45,51,0.3],[78,87,0.9]]
+speedSetting3 = [[15,999,0.5]]
 # speedSetting1 = [[15,23,0.5],[57,66,0.9],[85,92,1.5],[510,514,2.0],[635,641,0.7]]
 # speedSetting2 = [[15,23,0.5],[57,66,0.9],[85,92,1.5],[510,514,2.0],[635,641,0.7]]
 # speedSetting3 = [[15,23,0.5],[57,66,0.9],[85,92,1.5],[510,514,2.0],[635,641,0.7]]
@@ -354,6 +354,12 @@ if __name__ == '__main__':
                     rateData.append(f.rateInt)
                 allStartTime = allStartTime + limit
                 allStartBuffer = myBlock.fragList[-1].endBuffer
+                ######### do not reach limit
+                if(allStartBuffer > qlimit):
+                    diff = allStartBuffer - qlimit
+                    allStartTime = allStartTime + diff
+                    allStartBuffer = allStartBuffer - diff
+                #########
                 myBlock.endBuffer = allStartBuffer
                 myBlock.endTime = allStartTime
                 serverList.resort()
