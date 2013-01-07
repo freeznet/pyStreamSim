@@ -22,9 +22,16 @@ initSpeed = [500.0, 1000.0, 1500.0]
 # speedSetting2 = [[170,200,3],[620,640,0.5],[1293,1353,0.6]]
 # speedSetting3 = [[500,520,0.3],[1050,1060,0.3],[1110,1120,0.247]]
 
-speedSetting1 = [[500,510,3],[850,860,3],[1580,1590,3]]
-speedSetting2 = [[170,180,3],[640,650,0.5],[1300,1310,0.5]]
-speedSetting3 = [[400,410,0.3],[1050,1060,0.3],[1150,1160,0.3]]
+#short-term final
+# speedSetting1 = [[400,410,3],[850,860,3],[1580,1590,3]]
+# speedSetting2 = [[170,180,3],[640,650,0.5],[1300,1310,0.5]]
+# speedSetting3 = [[510,520,0.3],[1050,1060,0.3],[1210,1220,0.3]]
+
+#long-term final
+speedSetting1 = [[800,1300,2],[1600,1800,2]]
+speedSetting2 = [[200,750,2],[1100,1500,0.6]]
+speedSetting3 = [[400,730,0.6],[1200,1500,0.4]]
+
 
 # speedSetting1 = [[740,750,2]]#,[520,530,2.3]
 # speedSetting2 = [[200,230,3],[600,630,0.5]]#,[555,577,1.5]
@@ -62,11 +69,10 @@ ratevsbufferData = []
 fragIntData = []
 fragVsTimeData = []
 rateVsTimeVsBufferData = []
+idData = []
 
 FragNum = 0
 fragList = []
-
-
 
 class Server(object):
     def __init__(self, id, bw, speedset):
@@ -81,6 +87,7 @@ class Server(object):
         self.totalDownDur = 0
         self.durRecord = 0
         self.rate = 1
+        self.diff = 0
     def isDone(self):
         return len(self.downList)==0
     def setbw(self, bw):
@@ -91,7 +98,7 @@ class Server(object):
                 return self.bw * l[2]
         return self.bw
     def getavabw(self):
-        cut = 16
+        cut = 1
         s = 0
         c = 0
         if(len(self.doneList)>=cut):
@@ -223,154 +230,6 @@ class Fragment(object):
         #         allDone = False
         # self.block.isDone = allDone
 
-class Block(object):
-    def __init__(self, id, serverlist, rate, playtime):
-        global maxFragNum
-        self.id = id
-        self.servers = serverlist
-        self.serverSize = len(serverlist.list)
-        self.fragList = []
-        self.sortList = []
-        self.fragNum = 0
-        self.rate = rate
-        self.playtime = playtime
-        self.isDone = False
-        self.startTime = 0
-        self.endTime = 0
-        self.startBuffer = 0
-        self.endBuffer = 0
-        self.downDoneSeq = []
-        #cmin = serverlist.list[self.serverSize-1].getbw()
-        cmin = serverlist.list[self.serverSize-1].getavabw()
-        #print 'cmin=',cmin
-        while True:
-            serverlist.list[-1].numofrequest = 1
-            self.fragNum = 1
-            for i in range (0,self.serverSize-1):
-                #ci = serverlist.get(i).getbw()
-                ci = serverlist.get(i).getavabw()
-                serverlist.get(i).numofrequest = int(self.myFloor(ci,cmin))
-                #print i,serverlist.get(i).id,serverlist.get(i).numofrequest
-                self.fragNum = self.fragNum + serverlist.get(i).numofrequest
-            if(self.fragNum>maxFragNum):
-                self.serverSize = self.serverSize - 1
-                #cmin = serverlist.list[self.serverSize-1].getbw()
-                cmin = serverlist.list[self.serverSize-1].getavabw()
-            else:
-                break
-        #print self.fragNum
-        for i in range(0,self.fragNum):
-            self.initFragment(i)
-        self.doSchedule()
-    def initFragment(self, i):
-        f = Fragment(i, self.rate, self.playtime, self)
-        self.fragList.append(f)
-
-    def doSchedule(self):
-        Nk = self.fragNum
-        Smax = self.serverSize
-        #print 'Nk=',Nk,'Smax=',Smax
-        x = [[0 for col in range(Nk)] for row in range(Smax)]
-        #print x
-        for i in range(0,Nk):
-            jstar = 0
-            jlist = [0.0 for col in range(Smax)]
-            for j in range(0, Smax):
-                #jlist[j] = 1 / self.servers.get(j).getbw()
-                jlist[j] = 1 / self.servers.get(j).getavabw()
-                #print jlist
-                for t in range(0,i) :
-                    #jlist[j] += x[j][t] * (1 / self.servers.get(j).getbw());
-                    jlist[j] += x[j][t] * (1 / self.servers.get(j).getavabw());
-            jstar = jlist.index(min(jlist))
-            #print 'jstar=',jstar,'i=',i
-            x[jstar][i] = 1
-            f = self.fragList[i]
-            if(f != None):
-                f.setDownloadBy(self.servers.get(jstar))
-                self.servers.get(jstar).assignFrag(f)
-        self.x = x
-        # for i in range(0,Smax):
-        #     for j in range(0, Nk):
-        #         print x[i][j],
-        #     print ""
-    def getX(self, server, frag):
-        return self.x[server][frag]
-
-
-    def myFloor(self, a, b):
-        t = a / b
-        x = math.floor(t)
-        #print t,x
-        if(t-x>0.7):
-            x = x + 1
-        return x
-    def getalphan(self, n):
-        ret= 0
-        p = 0
-        q = 0
-        f = self.fragList[n]
-        #print "f.downBw = ",n,f.downBw
-        for i in range(0, self.serverSize):
-            q = q + self.getX(i, n) * f.downBw
-        for j in range(0, self.serverSize):
-            t = self.getX(j, n)
-            m = 0
-            for i in range(0,n+1):
-                m = m + self.getX(j, i)
-            p = p + (t * m)
-        #print p,q,self.serverSize
-        ret = p / q
-        return ret
-    def getNewRateID(self, rate):
-        global rateList
-        ret = 0
-        temp = rateList[0]
-        for i in range(0,len(rateList)):
-            if(rateList[i]<=rate):
-                temp = rateList[i]
-                ret = i
-        return ret
-
-    def getNewRate(self):
-        global blockList, qmin, qmax, kP, kD
-        pRate = rateList[self.rate-1]
-        newSelect = 0
-        if(len(blockList)>=2):
-            lastBlock = blockList[-2]
-            if(self.endBuffer >= qmax or self.endBuffer <= qmin):
-                vk = [0 for col in range(self.fragNum)]
-                vk2 = [0 for col in range(self.fragNum)]
-                vk3 = [0 for col in range(self.fragNum)]
-                if(self.endBuffer <= qmin):
-                    q0 = qmin
-                elif(self.endBuffer >= qmax):
-                    q0 = qmax
-                for i in range (0,self.fragNum):
-                    f = self.fragList[i]
-                    alphaN = self.getalphan(i)
-                    q_fragtEnk = f.endBuffer
-                    q_blockSk = self.startBuffer
-                    q_blockEk = self.endBuffer
-                    fragDownDur = f.downDur
-                    #print f.id,alphaN,q_fragtEnk,q_blockSk,q_blockEk,fragDownDur
-                    vk[i] = ((1/(self.playtime*alphaN)) * kP * (q_blockEk - q0))+ ((1/(self.playtime*alphaN)) * kD * ((q_fragtEnk - q_blockSk) / (fragDownDur)));
-                if(self.endBuffer <= qmin):
-                    #vtemp = min(min(vk),min(vk2),min(vk3))
-                    vtemp = min(vk)
-                elif(self.endBuffer >= qmax):
-                    #vtemp = max(max(vk),max(vk2),max(vk3))
-                    vtemp = max(vk)
-                newRate = pRate + vtemp
-                #print 'vtemp = ',vtemp, 'newRate = ',newRate
-                newSelect = self.getNewRateID(newRate) + 1
-                if(self.endBuffer<=qmin and newSelect>self.rate):
-                    newSelect = self.rate;
-                elif(self.endBuffer>=qmax and newSelect<self.rate):
-                    newSelect = self.rate;
-                return newSelect
-        return self.rate
-
 if __name__ == '__main__':
     sid = 0
     serverList = ServerList()
@@ -395,23 +254,33 @@ if __name__ == '__main__':
     limitServer = -1
     timelimit = 0
     diff = 0
+    timesleep = 0
     for f in fragList:
         f.downBy.durRecord = f.downBy.durRecord + f.downDur
         if(f.downBy.durRecord > limit):
             allStartBuffer = allStartBuffer + playTime - (f.downBy.durRecord - limit)
             limit = f.downBy.durRecord
             f.endBuffer = allStartBuffer
-            f.endDownload = f.endDownload + diff
-            diff = 0
+            f.startDownload = f.startDownload + timesleep
+            f.endDownload = f.endDownload + timesleep
+            # f.endDownload = f.endDownload + diff
+            # diff = 0
         else:
             allStartBuffer = allStartBuffer + playTime
             f.endBuffer = allStartBuffer
-            f.endDownload = f.endDownload + diff
-            diff = 0
+            f.startDownload = f.startDownload + timesleep
+            f.endDownload = f.endDownload + timesleep
+            # f.endDownload = f.endDownload + diff
+            # diff = 0
 
         if(allStartBuffer > qlimit):
             diff = allStartBuffer - sleepTime
+            timesleep = timesleep + diff
             allStartBuffer = allStartBuffer - diff
+            print 'sleep',diff,'at',f.endDownload,'timesleep=',timesleep
+            for s in serverList.list:
+                s.totalDownDur = s.totalDownDur + diff
+            diff = 0
 
         # if(timelimit<=f.endDownload):
         #     timelimit = f.endDownload
@@ -432,9 +301,10 @@ if __name__ == '__main__':
         rateData.append(f.rateInt)
         fragIntData.append(f.id)
         fragVsTimeData.append(f.endDownload)
-        rateVsTimeVsBufferData.append([f.endDownload,f.rateInt,f.endBuffer])
-        print '%d\t\t%d\t\t%d\t\t%.3f\t\t\t%.3fKbit/s\t\t\t%.3f\t%.3f\t%.3f\t'%(f.downBy.id,f.id,f.rateInt,f.downDur,f.downBw,f.endBuffer,f.endDownload,f.downBy.durRecord)
-    
+        idData.append(f.id)
+        rateVsTimeVsBufferData.append([f.endDownload,f.rateInt,f.endBuffer,f.id])
+        #print '%d\t\t%d\t\t%d\t\t%.3f\t\t\t%.3fKbit/s\t\t\t%.3f\t%.3f\t%.3f\t'%(f.downBy.id,f.id,f.rateInt,f.downDur,f.downBw,f.endBuffer,f.endDownload,f.downBy.durRecord)
+        #id, rate, time, buffer
     rateVsTimeVsBufferData.sort(key=lambda x: x[0])
     ratel = [item[1] for item in rateVsTimeVsBufferData]
     timel = [item[0] for item in rateVsTimeVsBufferData]
@@ -447,11 +317,27 @@ if __name__ == '__main__':
     # print rateData
     # print timelineData
     fig3 = plt.subplot(313)
-    fig3.plot(fragIntData,fragVsTimeData)
+    #fig3.plot(fragIntData,fragVsTimeData)
+    fig3.plot(idData, rateData)
+
+    rateVsTimeVsBufferData.sort(key=lambda x: x[0])
+    rate2 = [item[1] for item in rateVsTimeVsBufferData]
+    id2 = [item[3] for item in rateVsTimeVsBufferData]
+
+    # for f in serverList.get(0).doneList:
+    #     print '%d\t\t%d\t\t%d\t\t%.3f\t\t\t%.3fKbit/s\t\t\t%.3f\t%.3f\t%.3f\t'%(f.downBy.id,f.id,f.rateInt,f.downDur,f.downBw,f.endBuffer,f.endDownload,f.downBy.durRecord)
+    # print '#####################################'
+    # for f in serverList.get(1).doneList:
+    #     print '%d\t\t%d\t\t%d\t\t%.3f\t\t\t%.3fKbit/s\t\t\t%.3f\t%.3f\t%.3f\t'%(f.downBy.id,f.id,f.rateInt,f.downDur,f.downBw,f.endBuffer,f.endDownload,f.downBy.durRecord)
+    # print '#####################################'
+    # for f in serverList.get(2).doneList:
+    #     print '%d\t\t%d\t\t%d\t\t%.3f\t\t\t%.3fKbit/s\t\t\t%.3f\t%.3f\t%.3f\t'%(f.downBy.id,f.id,f.rateInt,f.downDur,f.downBw,f.endBuffer,f.endDownload,f.downBy.durRecord)
+    # suma = len(fragList)
+    # print suma
     #fig3 = plt.subplot(213)
     #fig3.plot(fragIntData,fragVsTimeData)
-    # for i in range(0,len(timelineData)):
-    #     print '%.5f %d %.3f'%(timelineData[i],ratevsbufferData[i],bufferLengthData[i])
+    for i in range(0,len(timel)):
+        print '%d %d %.5f %.3f'%(id2[i],rate2[i],timel[i],bufferl[i])
     plt.show()
 
     

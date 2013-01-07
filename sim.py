@@ -18,13 +18,15 @@ playTime = 5
 dataPacket = [playTime*col for col in rateList]
 
 initSpeed = [500.0, 1000.0, 1500.0]
-speedSetting1 = [[850,860,3],[1120,1130,2],[1580,1590,3]]
-speedSetting2 = [[170,200,3],[620,640,0.5],[1293,1353,0.6]]
-speedSetting3 = [[500,520,0.3],[1050,1060,0.3],[1110,1120,0.247]]
+#short-term final
+# speedSetting1 = [[850,860,3],[1120,1130,2],[1580,1590,3]]
+# speedSetting2 = [[170,200,3],[620,640,0.5],[1293,1353,0.6]]
+# speedSetting3 = [[500,520,0.3],[1050,1060,0.3],[1110,1120,0.247]]
 
-# speedSetting1 = [[850,860,3],[1580,1590,3]]
-# speedSetting2 = [[170,200,3],[630,640,0.5],[1293,1353,0.6]]
-# speedSetting3 = [[1050,1060,0.3],[1110,1120,0.247]]
+#long-term final
+speedSetting1 = [[800,1300,2],[1600,1800,2]]
+speedSetting2 = [[200,750,2],[1100,1500,0.6]]
+speedSetting3 = [[400,730,0.6],[1200,1500,0.4]]
 
 # speedSetting1 = [[740,750,2]]#,[520,530,2.3]
 # speedSetting2 = [[200,230,3],[600,630,0.5]]#,[555,577,1.5]
@@ -53,12 +55,14 @@ serverList = None
 
 nowBlock = 0
 blockList = []
+fragId = 0
 
 timelineData = []
 bufferLengthData = []
 rateData = []
 rateTimelineData = []
 ratevsbufferData = []
+rateVsTimeVsBufferData = []
 
 class Server(object):
     def __init__(self, id, bw, speedset):
@@ -80,7 +84,7 @@ class Server(object):
                 return self.bw * l[2]
         return self.bw
     def getavabw(self):
-        cut = 16
+        cut = 1
         s = 0
         c = 0
         if(len(self.doneList)>=cut):
@@ -229,7 +233,9 @@ class Block(object):
             self.initFragment(i)
         self.doSchedule()
     def initFragment(self, i):
-        f = Fragment(i, self.rate, self.playtime, self)
+        global fragId
+        f = Fragment(fragId, self.rate, self.playtime, self)
+        fragId = fragId + 1
         self.fragList.append(f)
 
     def doSchedule(self):
@@ -353,6 +359,7 @@ if __name__ == '__main__':
     ratevsbufferData.append(rateList[0])
     rateTimelineData.append(b.startTime)
     rateData.append(rateList[0])
+    #rateVsTimeVsBufferData.append([b.startTime,rateList[0],b.startBuffer,f.id])
     blockList.append(b)
     #print 'block',nowBlock,' -> ',b.fragNum
     nowBlock = nowBlock + 1
@@ -376,6 +383,7 @@ if __name__ == '__main__':
                     else:
                         allStartBuffer = allStartBuffer + playTime
                         f.endBuffer = allStartBuffer
+                    rateVsTimeVsBufferData.append([f.endDownload,f.rateInt,f.endBuffer,f.id])
                     if(timelimit<=f.endDownload):
                         timelimit = f.endDownload
                     else:
@@ -395,6 +403,7 @@ if __name__ == '__main__':
                         ratevsbufferData.append(f.rateInt)
                     rateTimelineData.append(f.endDownload)
                     rateData.append(f.rateInt)
+                    
                     #
 
                 allStartTime = timelimit
@@ -424,9 +433,13 @@ if __name__ == '__main__':
     # print timelineData
     fig2 = plt.subplot(212)
     fig2.plot(rateTimelineData,rateData)
-    for i in range(0,len(timelineData)):
-        print '%.5f %d %.3f'%(timelineData[i],ratevsbufferData[i],bufferLengthData[i])
-    
+    ratel = [item[1] for item in rateVsTimeVsBufferData]
+    timel = [item[0] for item in rateVsTimeVsBufferData]
+    bufferl = [item[2] for item in rateVsTimeVsBufferData]
+    id1 = [item[3] for item in rateVsTimeVsBufferData]
+    for i in range(0,len(ratel)):
+        print '%d %.5f %d %.3f'%(id1[i],timel[i],ratel[i],bufferl[i])
+    #print len(ratel)
     plt.show()
     
 
