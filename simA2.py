@@ -320,7 +320,7 @@ if __name__ == '__main__':
     #fig3.plot(fragIntData,fragVsTimeData)
     fig3.plot(idData, rateData)
 
-    rateVsTimeVsBufferData.sort(key=lambda x: x[0])
+    rateVsTimeVsBufferData.sort(key=lambda x: x[3])
     rate2 = [item[1] for item in rateVsTimeVsBufferData]
     id2 = [item[3] for item in rateVsTimeVsBufferData]
 

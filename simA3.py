@@ -22,15 +22,19 @@ initSpeed = [500.0, 1000.0, 1500.0]
 # speedSetting2 = [[170,200,3],[620,640,0.5],[1293,1353,0.6]]
 # speedSetting3 = [[500,520,0.3],[1050,1060,0.3],[1110,1120,0.247]]
 
+speedSetting1 = [[850,880,3],[1120,1150,2],[1580,1610,3]]
+speedSetting2 = [[170,200,3],[620,650,0.5],[1293,1323,0.6]]
+speedSetting3 = [[500,530,0.3],[1050,1080,0.3],[1110,1140,0.247]]
+
 #short-term final
 # speedSetting1 = [[400,410,3],[850,860,3],[1580,1590,3]]
 # speedSetting2 = [[170,180,3],[640,650,0.5],[1300,1310,0.5]]
 # speedSetting3 = [[510,520,0.3],[1050,1060,0.3],[1210,1220,0.3]]
 
 #long-term final
-speedSetting1 = [[800,1300,2],[1600,1800,2]]
-speedSetting2 = [[200,750,2],[1100,1500,0.6]]
-speedSetting3 = [[400,730,0.6],[1200,1500,0.4]]
+# speedSetting1 = [[800,1300,2],[1600,1800,2]]
+# speedSetting2 = [[200,750,2],[1100,1500,0.6]]
+# speedSetting3 = [[400,730,0.6],[1200,1500,0.4]]
 
 
 # speedSetting1 = [[740,750,2]]#,[520,530,2.3]
@@ -45,7 +49,7 @@ speedSettings = [speedSetting1,speedSetting2,speedSetting3]
 qmin = 15
 qmax = 50
 qlimit = 55
-sleepTime = 30
+sleepTime = 40
 kP = 1.1
 kD = 0.8
 maxTime = 2000
@@ -71,15 +75,18 @@ fragVsTimeData = []
 rateVsTimeVsBufferData = []
 idData = []
 
+sleepData = []
+
 FragNum = 0
 fragList = []
+fragDoneList = []
 uncomputeFrags = []
 nowComputeFrag = -1
 nowBufferLength = 0
 computeTimeLimit = 0
 
-qref = 30
-p = 0.1
+qref = 40
+p = 0.2
 Vl = 3500
 W = 10
 Counter = 0
@@ -99,6 +106,7 @@ class Server(object):
         self.durRecord = 0
         self.rate = 1
         self.diff = 0
+        self.sleepDur = 0
     def isDone(self):
         return len(self.downList)==0
     def setbw(self, bw):
@@ -138,31 +146,37 @@ class Server(object):
                 ret = i
         return ret + 1
     def getNewRate(self):
-        global qref, p, playTime, Vl, W, serverList, Counter, m
+        global qref, p, playTime, Vl, W, serverList, Counter, m, fragList
         if(len(self.doneList)<2):
             vk = 1
             return vk
-        Fqk = 2 * (math.pow(math.e,(p * self.doneList[-1].endBuffer - qref))) / (1 + math.pow(math.e,(p * self.doneList[-1].endBuffer - qref)))
-        #print Fqk
-        Ftk = playTime / (playTime - (self.doneList[-1].endBuffer - self.doneList[-1].startBuffer))
+        eee = p * (self.doneList[-1].endBuffer - qref)
+        tme = math.e**eee
+        Fqk = 2 * tme / (1 + tme )
+        # print self.doneList[-1].id,self.doneList[-1].endBuffer,Fqk
+        if(self.doneList[-1].endBuffer - self.doneList[-1].startBuffer == playTime):
+            Ftk = 10
+        else:
+            Ftk = playTime / (playTime - (self.doneList[-1].endBuffer - self.doneList[-1].startBuffer))
         Fvk = (Vl / self.doneList[-1].rateInt + W) + (W / Vl + W)
         Fk = Fqk * Ftk * Fvk
         vkT = Fk * serverList.getTotalAvBw()
+        #print Fvk,Fk,vkT
         if(self.doneList[-1].endBuffer < qref/2):
             vk = self.getNewRateID(serverList.getTotalBw())
             return vk
-        elif(vkT > self.doneList[-1].rateInt):
+        elif(vkT > fragDoneList[-1].rateInt):
             Counter = Counter + 1
             if(Counter > m):
                 vk = self.getNewRateID(serverList.getTotalAvBw())
                 Counter = 0
                 return vk
-        elif(vkT < self.doneList[-1].rateInt):
+        elif(vkT < fragDoneList[-1].rateInt):
             Counter = 0
-        vk = self.doneList[-1].rate
+        vk = fragDoneList[-1].rate
         return vk
     def down(self):
-        global allStartTime, nowBufferLength, computeTimeLimit, nowComputeFrag
+        global allStartTime, nowBufferLength, computeTimeLimit, nowComputeFrag, uncomputeFrags, qlimit, sleepTime, fragDoneList
         startTime = 0
         if(allStartTime < self.totalDownDur):
             allStartTime = self.totalDownDur
@@ -174,6 +188,7 @@ class Server(object):
             rate = nowFrag.rate
             size = dataPacket[rate-1]
             nowFrag.startDownload = self.nowTime
+            nowFrag.startBuffer = nowBufferLength
             downDur = 0
             downBW = 0
             while size>0:
@@ -207,14 +222,24 @@ class Server(object):
             #print '%d %d %d %.5f %f %.3f'%(self.id,nowFrag.id,nowFrag.rateInt,nowFrag.downBw,nowFrag.downDur,nowFrag.endDownload)
             self.downList.remove(nowFrag)
             self.doneList.append(nowFrag)
+            fragDoneList.append(nowFrag)
             if(nowFrag.id -1 == nowComputeFrag):
                 if(self.nowTime > computeTimeLimit):
-                    nowBufferLength = nowBufferLength + nowFrag.playtime - (self.nowTime - computeTimeLimit)
-                    computeTimeLimit = self.nowTime
+                    nowBufferLength = nowBufferLength + nowFrag.playtime - (nowFrag.endDownload - computeTimeLimit)
+                    computeTimeLimit = nowFrag.endDownload
                     nowFrag.endBuffer = nowBufferLength
                 else:
                     nowBufferLength = nowBufferLength + nowFrag.playtime
                     nowFrag.endBuffer = nowBufferLength
+                if(nowBufferLength>qlimit):
+                    dif = nowBufferLength - sleepTime
+                    nowBufferLength = nowBufferLength - dif
+                    print self.id,'sleep',dif,'at',self.totalDownDur
+                    self.totalDownDur = self.totalDownDur + dif
+                    self.sleepDur = self.sleepDur + dif
+
+
+                #print '%d %d %d %.2f %.2f %.2f %.2f'%(self.id,nowFrag.id,nowFrag.rateInt,nowFrag.downBw,nowFrag.downDur,nowFrag.endDownload,nowFrag.endBuffer)
                 nowComputeFrag = nowFrag.id
                 if(len(uncomputeFrags)>0):
                     for f in uncomputeFrags:
@@ -274,7 +299,7 @@ class ServerList(object):
                 ss.remove(max(ss))
                 ss.remove(min(ss))
             ret = ret + sum(ss)/len(ss)
-        ret = ret / len(self.list)
+        #ret = ret / len(self.list)
         return ret
     def getNewRate(self):
         global rateList
@@ -354,8 +379,32 @@ if __name__ == '__main__':
     diff = 0
     timesleep = 0
     for f in fragList:
-        print '%d\t\t%d\t\t%d\t\t%.3f\t\t\t%.3fKbit/s\t\t\t%.3f\t%.3f\t%.3f\t'%(f.downBy.id,f.id,f.rateInt,f.downDur,f.downBw,f.endBuffer,f.endDownload,f.downBy.durRecord)
+        #print '%d\t\t%d\t\t%d\t\t%.3f\t\t\t%.3fKbit/s\t\t\t%.3f\t%.3f\t%.3f\t'%(f.downBy.id,f.id,f.rateInt,f.downDur,f.downBw,f.endBuffer,f.endDownload,f.downBy.durRecord)
+        rateVsTimeVsBufferData.append([f.endDownload,f.rateInt,f.endBuffer,f.id])
 
+    rateVsTimeVsBufferData.sort(key=lambda x: x[0])
+    ratel = [item[1] for item in rateVsTimeVsBufferData]
+    timel = [item[0] for item in rateVsTimeVsBufferData]
+    bufferl = [item[2] for item in rateVsTimeVsBufferData]
+
+    fig1 = plt.subplot(311)
+    fig1.plot(timel, bufferl)
+    fig2 = plt.subplot(312)
+    fig2.plot(timel, ratel)
+    # print rateData
+    # print timelineData
+    
+
+    rateVsTimeVsBufferData.sort(key=lambda x: x[3])
+    rate2 = [item[1] for item in rateVsTimeVsBufferData]
+    id2 = [item[3] for item in rateVsTimeVsBufferData]
+    fig3 = plt.subplot(313)
+    #fig3.plot(fragIntData,fragVsTimeData)
+    fig3.plot(id2, rate2)
+    for i in range(0,len(timel)):
+        print '%d %d %.3f %.3f'%(id2[i],rate2[i],timel[i],bufferl[i])
+
+    plt.show()
     # for f in fragList:
     #     f.downBy.durRecord = f.downBy.durRecord + f.downDur
     #     if(f.downBy.durRecord > limit):
