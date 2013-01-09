@@ -19,14 +19,14 @@ dataPacket = [playTime*col for col in rateList]
 
 initSpeed = [500.0, 1000.0, 1500.0]
 #short-term final
-speedSetting1 = [[850,860,3],[1120,1130,2],[1580,1590,3]]
-speedSetting2 = [[170,200,3],[620,640,0.5],[1293,1353,0.6]]
-speedSetting3 = [[500,520,0.3],[1050,1060,0.3],[1110,1120,0.247]]
+# speedSetting1 = [[850,860,3],[1120,1130,2],[1580,1590,3]]
+# speedSetting2 = [[170,200,3],[620,640,0.5],[1293,1353,0.6]]
+# speedSetting3 = [[500,520,0.3],[1050,1060,0.3],[1110,1120,0.247]]
 
 #long-term final
-# speedSetting1 = [[800,1300,2],[1600,1800,2]]
-# speedSetting2 = [[200,750,2],[1100,1500,0.6]]
-# speedSetting3 = [[400,730,0.6],[1200,1500,0.4]]
+speedSetting1 = [[800,1300,2],[1600,1800,2]]
+speedSetting2 = [[200,750,2],[1100,1500,0.6]]
+speedSetting3 = [[400,730,0.6],[1200,1500,0.4]]
 
 # speedSetting1 = [[740,750,2]]#,[520,530,2.3]
 # speedSetting2 = [[200,230,3],[600,630,0.5]]#,[555,577,1.5]
@@ -84,7 +84,7 @@ class Server(object):
                 return self.bw * l[2]
         return self.bw
     def getavabw(self):
-        cut = 16
+        cut = 1
         s = 0
         c = 0
         if(len(self.doneList)>=cut):
@@ -440,7 +440,7 @@ if __name__ == '__main__':
     fig3 = plt.subplot(313)
     fig3.plot(id1,ratel)
     for i in range(0,len(ratel)):
-        print '%d %.5f %d %.3f'%(id1[i],timel[i],ratel[i],bufferl[i])
+        print '%d \t %d \t %.5f \t %.3f'%(id1[i],ratel[i],timel[i],bufferl[i])
     #print len(ratel)
     plt.show()
     

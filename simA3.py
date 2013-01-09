@@ -22,19 +22,20 @@ initSpeed = [500.0, 1000.0, 1500.0]
 # speedSetting2 = [[170,200,3],[620,640,0.5],[1293,1353,0.6]]
 # speedSetting3 = [[500,520,0.3],[1050,1060,0.3],[1110,1120,0.247]]
 
-speedSetting1 = [[850,880,3],[1120,1150,2],[1580,1610,3]]
-speedSetting2 = [[170,200,3],[620,650,0.5],[1293,1323,0.6]]
-speedSetting3 = [[500,530,0.3],[1050,1080,0.3],[1110,1140,0.247]]
-
 #short-term final
+# speedSetting1 = [[850,880,3],[1120,1150,2],[1580,1610,3]]
+# speedSetting2 = [[170,200,3],[620,650,0.5],[1293,1323,0.6]]
+# speedSetting3 = [[500,530,0.3],[1050,1080,0.3],[1110,1140,0.247]]
+
+###short-term final
 # speedSetting1 = [[400,410,3],[850,860,3],[1580,1590,3]]
 # speedSetting2 = [[170,180,3],[640,650,0.5],[1300,1310,0.5]]
 # speedSetting3 = [[510,520,0.3],[1050,1060,0.3],[1210,1220,0.3]]
 
 #long-term final
-# speedSetting1 = [[800,1300,2],[1600,1800,2]]
-# speedSetting2 = [[200,750,2],[1100,1500,0.6]]
-# speedSetting3 = [[400,730,0.6],[1200,1500,0.4]]
+speedSetting1 = [[800,1300,2],[1600,1800,2]]
+speedSetting2 = [[200,750,2],[1100,1500,0.6]]
+speedSetting3 = [[400,730,0.6],[1200,1500,0.4]]
 
 
 # speedSetting1 = [[740,750,2]]#,[520,530,2.3]
@@ -402,7 +403,7 @@ if __name__ == '__main__':
     #fig3.plot(fragIntData,fragVsTimeData)
     fig3.plot(id2, rate2)
     for i in range(0,len(timel)):
-        print '%d %d %.3f %.3f'%(id2[i],rate2[i],timel[i],bufferl[i])
+        print '%d \t %d \t %.3f \t %.3f'%(id2[i],rate2[i],timel[i],bufferl[i])
 
     plt.show()
     # for f in fragList:
