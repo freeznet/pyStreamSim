@@ -13,8 +13,8 @@ from threading import Thread
 
 
 sockIndex = 1
-serverList = [['42.121.78.93',1234],['hz.idcst.cn',1234],['qd.idcst.cn',1234],['qd2.idcst.cn',1234],['60.28.160.80',1234],['49.212.204.220',1234]]
-#serverList = [['127.0.0.1',1234],['127.0.0.1',1235],['127.0.0.1',1236]]
+#serverList = [['127.0.0.1',1234],['218.92.0.22',1234],['42.121.78.93',1234],['106.186.17.248',1234],['106.186.20.75',1234]]
+serverList = [['127.0.0.1',1234],['127.0.0.1',1235],['127.0.0.1',1236]]
 serverLimit = [62.5* 8 * 1024,125* 8 * 1024,187.5* 8 * 1024]
 
 rateList = [300,700,1500,2500,3500]
@@ -125,6 +125,14 @@ def make_throttled_socket(*args, **kwargs):
     '''
     return ThrottledSocket(socket._realsocket(*args, **kwargs), 25 * 8 * 1024)
         
+def patch():
+    '''
+    Monkey patch socket to ensure that all new sockets created are throttled
+    sockets.
+    '''
+    # monkey patch socket to use this type of socket for everything
+    socket.socket = make_throttled_socket
+    socket.SocketType = ThrottledSocket
 
 
 class Server():
@@ -454,7 +462,7 @@ class serverConnect(Thread):
         slist.addServer(self.s)
 
     def recv_timeout(self,rate,timeout=2):
-        self.conn.setblocking(0)
+        #self.conn.setblocking(0)
         total_data=[];
         data='';
         recvLen = 0
@@ -463,24 +471,27 @@ class serverConnect(Thread):
         dur = 0
         so = "SEND" + "%d" % rate
         self.conn.send(so)
-        while 1:
-            if total_data and time()-begin > timeout:
-                break
-            elif time()-begin > timeout*2:
-                break
-            elif recvLen>=dataPacket[rate-1]:
-                break
-            try:
-                while recvLen<dataPacket[rate-1]:
-                    data = self.conn.recv(dataPacket[rate-1])
-                    if data:
-                        total_data.append(data)
-                        recvLen = recvLen + len(data)
-                        begin = time()
-                #else:
-                #    time.sleep(0.01)
-            except:
-                pass
+        recvlen = dataPacket[rate-1]
+        #print recvlen
+        data = self.conn.recv(recvlen)
+        recvLen = len(data)
+        # while 1:
+        #     if total_data and time()-begin > timeout:
+        #         break
+        #     elif time()-begin > timeout*2:
+        #         break
+        #     elif recvLen>=dataPacket[rate-1]:
+        #         break
+        #     try:
+        #         data = self.conn.recv(dataPacket[rate-1])
+        #         if data:
+        #             total_data.append(data)
+        #             recvLen = recvLen + len(data)
+        #             begin = time()
+        #         #else:
+        #         #    time.sleep(0.01)
+        #     except:
+        #         pass
         #print 'length =' , recvLen,', time =' , dur, 'bw =' , recvLen/8/dur
         dur = time() - start
         return recvLen,dur
@@ -509,23 +520,22 @@ class serverConnect(Thread):
         global slist, blockList
         rate = 1
         #test speed
-        while True:
-        #if(self.s.getBandwidth()==None or self.s.getBandwidth()==0):
+        if(self.s.getBandwidth()==None or self.s.getBandwidth()==0):
             self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.conn.connect((serverList[self.server][0], serverList[self.server][1]))
-            #self.conn.setLimit(serverLimit[self.server])
+            self.conn.setLimit(serverLimit[self.server])
             #rev, d = self.recv_timeout(1)
             rev, d = self.recv_timeout(rate)
             #print rev, d
-            if(rev>0 and d>0 and rev==dataPacket[rate-1]):
-                print 'BW Testing:',self.name,'=' , rev/1024/d, 'KB/s','block = ',rev,'dur=',d
+            if(rev>0 and d>0):
+                print 'BW Testing:',self.name,'=' , rev/1024/d, 'KB/s'
                 self.s.bw = rev/1024/d
         nowFrag = self.s.getDownloadFragment();
         while True:
             if(nowFrag!=None):
                 self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.conn.connect((serverList[self.server][0], serverList[self.server][1]))
-                #self.conn.setLimit(serverLimit[self.server])
+                self.conn.setLimit(serverLimit[self.server])
                 nowFrag.startDownload = time()
                 nowFrag.startBuffer = bufferLength
                 rate = nowFrag.rate;
@@ -580,11 +590,11 @@ def start(numT):
     task = Buffer()
     task.start()
     #tasks.append( task )
-    #task = BWSetter(tasks)
-    #task.start()
+    task = BWSetter(tasks)
+    task.start()
 
 if __name__ == '__main__':
     #plt.interactive(True)
-    #patch()
+    patch()
     slist = ServerList()
-    start(4)
+    start(3)
