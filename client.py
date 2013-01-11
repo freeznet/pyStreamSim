@@ -13,7 +13,7 @@ from threading import Thread
 
 
 sockIndex = 1
-serverList = [['42.121.78.93',1234],['hz.idcst.cn',1234],['qd.idcst.cn',1234],['qd2.idcst.cn',1234],['60.28.160.80',1234],['49.212.204.220',1234]]
+serverList = [['sh.idcst.cn',1234],['qd.idcst.cn',1234],['qd2.idcst.cn',1234],['42.121.78.93',1234],['60.28.160.80',1234],['sh.idcst.cn',1234],['49.212.204.220',1234]]
 #serverList = [['127.0.0.1',1234],['127.0.0.1',1235],['127.0.0.1',1236]]
 serverLimit = [62.5* 8 * 1024,125* 8 * 1024,187.5* 8 * 1024]
 
@@ -28,12 +28,13 @@ downloadDonePendList = []
 bufferLength = 0;
 nowFragID = 0;
 
-maxFragNum = 6
+maxFragNum = 10
 nowBlock = 0
 blockList = []
 
-qmin = 10
-qmax = 50
+qmin = 15
+qmax = 55
+cut = 5
 
 slist = None
 
@@ -47,85 +48,7 @@ rateTimelineData = []
 
 allStartTime = 0
 
-class ThrottledSocket(object):
-    
-    def __init__(self, wrappedsock, rx_bps_max = 1 * 1024):
-        '''
-        rx_bps_max: Maximum number of bits per second to receive, above which 
-                    we attempt to throttle. Algorithm is such that rate can not
-                    be precisely guaranteed. Defaults to 10240 ( = 10 Kbps) 
-        '''
-        # Was: self._sock = sock
-        # but this would have triggered setattr, so acheive the same effect: 
-        self.__dict__['_wrappedsock'] = wrappedsock
-        self.__dict__['_debug'] = False
-        # We convert to bytes to make maths a little quicker in the middle
-        # of the recv call. Div by 8.0 not 8 to ensure a float. If integer, 
-        # all our expected durations get rounded to integer values.
-        self.__dict__['max_bytes_per_sec'] = rx_bps_max / 8.0
-
-    def __getattr__(self, attr):
-        return getattr(self._wrappedsock, attr)
-    
-    def __setattr__(self, attr, value):
-        return setattr(self._wrappedsock, attr, value)       
-    
-    def setLimit(self, bit):
-        #print 'set max_bytes_per_sec to',bit/8.0
-        self.__dict__['max_bytes_per_sec'] = bit / 8.0
-    def recv(self, *args):
-        start = time()
-        buf = self._wrappedsock.recv(*args)
-        end = time()
-        expected_end = start + (len(buf) / self.max_bytes_per_sec)
-        if self._debug:
-            duration = end - start
-            if duration == 0:
-                rate = "infinite"
-            else:
-                rate = len(buf) / duration / 1024
-            print "Start: %s, End: %s, Expected end: %s" % (start, end,
-                expected_end)
-            print "Actual: received %s bytes in %s seconds: rate=%sKB/s" % (
-                len(buf), duration, rate ) 
-        if expected_end > end: # only sleep if recv was quicker than expected
-            # assume negligable time between end and here, and that additional
-            # calls to time() may end up being more lengthly than the logic
-            # to determine how long to sleep for.
-            if self._debug:
-                print "  Sleeping % s seconds" % (expected_end - end)
-            # TODO: Protect from negative sleeps?    
-            sleep(expected_end - end)
-        if self._debug:
-            now = time()
-            duration = now - start
-            if duration == 0:
-                rate = "infinite"
-            else:
-                rate = len(buf) / duration / 1024
-            print "Effective: received %s bytes in %s seconds: rate=%sKB/s" % (
-                len(buf), duration, rate )
-        return buf 
-
-    
-    def makefile(self, mode='r', bufsize=-1):
-        """makefile([mode[, bufsize]]) -> file object
-
-        Return a regular file object corresponding to the socket.  The mode
-        and bufsize arguments are as for the built-in open() function.
-        
-        File object wraps this socket, not the underlying socket implementation.
-        TODO: Better doc for this
-        """
-        return socket._fileobject(self, mode, bufsize)
-    
-def make_throttled_socket(*args, **kwargs):
-    ''' 
-    Create a wrapped _realsocket that throttles received data rate to 5KB/s
-    '''
-    return ThrottledSocket(socket._realsocket(*args, **kwargs), 25 * 8 * 1024)
-        
-
+unchangedBlock = 0
 
 class Server():
     def __init__(self, id, name):
@@ -136,6 +59,7 @@ class Server():
         self.downloadBlock = []
         self.downloadedFrag = []
         self.numofrequest = 0
+        self.doneList = []
     def getBandwidth(self):
         return self.bw
     def assignFrag(self, f):
@@ -153,6 +77,22 @@ class Server():
         if(f in self.downloadFrag):
             self.downloadedFrag.append(f)
             self.downloadFrag.remove(f)
+    def getavabw(self):
+        global cut
+        s = 0
+        c = 0
+        if(len(self.doneList)>=cut):
+            for i in range(len(self.doneList)-cut, len(self.doneList)):
+                s = s + self.doneList[i].downBw
+                c = c + 1
+        else:
+            for i in range(0, len(self.doneList)):
+                s = s + self.doneList[i].downBw
+                c = c + 1
+        if(c>0):
+            return s / c
+        else:
+            return self.getBandwidth()
 
 class ServerList():
     def __init__(self):
@@ -167,12 +107,20 @@ class ServerList():
             leng = len(self.list)
             for i in xrange(leng):
                 for j in xrange(leng - 1 - i):
-                    if(self.list[j].getBandwidth() < self.list[j+1].getBandwidth()):
+                    if(self.list[j].getavabw() < self.list[j+1].getavabw()):
                         temp = self.list[j]
                         self.list[j] = self.list[j+1]
                         self.list[j+1] = temp
         #for i in range(0,leng):
         #    print i,'->',self.list[i].name,'->',self.list[i].bw
+    def getAvBw(self):
+        t = 0
+        c = 0
+        for s in self.list:
+            t = t + s.getavabw()
+            c = c + 1
+        return t / c
+
 
 
 class Block():
@@ -191,18 +139,18 @@ class Block():
         self.startBuffer = 0
         self.endBuffer = 0
         self.downDoneSeq = []
-        cmin = serverlist.list[self.serverSize-1].getBandwidth()
+        cmin = serverlist.list[self.serverSize-1].getavabw()
         while True:
             serverlist.list[-1].numofrequest = 1
             self.fragNum = 1
             for i in range (0,self.serverSize-1):
-                ci = serverlist.getServer(i).getBandwidth()
+                ci = serverlist.getServer(i).getavabw()
                 serverlist.getServer(i).numofrequest = int(self.myFloor(ci,cmin))
                 #print i,serverlist.getServer(i).numofrequest
                 self.fragNum = self.fragNum + serverlist.getServer(i).numofrequest
             if(self.fragNum>maxFragNum):
                 self.serverSize = self.serverSize - 1
-                cmin = serverlist.list[self.serverSize-1].getBandwidth()
+                cmin = serverlist.list[self.serverSize-1].getavabw()
             else:
                 break
         #print self.fragNum
@@ -223,9 +171,9 @@ class Block():
             jstar = 0
             jlist = [0 for row in range(Smax)]
             for j in range(0, Smax):
-                jlist[j] = 1 / self.servers.getServer(j).getBandwidth()
+                jlist[j] = 1 / self.servers.getServer(j).getavabw()
                 for t in range(0,i) :
-                    jlist[j] += x[j][t] * (1 / self.servers.getServer(j).getBandwidth());
+                    jlist[j] += x[j][t] * (1 / self.servers.getServer(j).getavabw());
             jstar = jlist.index(min(jlist))
             #print 'jstar=',jstar,'i=',i
             x[jstar][i] = 1
@@ -275,7 +223,8 @@ class Block():
 
     def getNewRate(self):
         global blockList, qmin, qmax
-        pRate = rateList[self.rate-1]
+        #pRate = rateList[self.rate-1]
+        pRate = self.servers.getAvBw()
         newSelect = 0
         kP = 1.1
         kD = 0.8
@@ -298,14 +247,14 @@ class Block():
                     fragDownDur = f.downDur
                     #print f.id,alphaN,q_fragtEnk,q_blockSk,q_blockEk,fragDownDur
                     vk[i] = ((1/(self.playtime*alphaN)) * kP * (q_blockEk - q0))+ ((1/(self.playtime*alphaN)) * kD * ((q_fragtEnk - q_blockSk) / (fragDownDur)));
-                    vk2[i] = ((1/(self.playtime*alphaN)) * 1.5 * (q_blockEk - q0))+ ((1/(self.playtime*alphaN)) * kD * ((q_fragtEnk - q_blockSk) / (fragDownDur)));
-                    vk3[i] = ((1/(self.playtime*alphaN)) * kP*2 * (q_blockEk - q0))+ ((1/(self.playtime*alphaN)) * kD * ((q_fragtEnk - q_blockSk) / (fragDownDur)));
+                    #vk2[i] = ((1/(self.playtime*alphaN)) * 1.5 * (q_blockEk - q0))+ ((1/(self.playtime*alphaN)) * kD * ((q_fragtEnk - q_blockSk) / (fragDownDur)));
+                    #vk3[i] = ((1/(self.playtime*alphaN)) * kP*2 * (q_blockEk - q0))+ ((1/(self.playtime*alphaN)) * kD * ((q_fragtEnk - q_blockSk) / (fragDownDur)));
                 if(self.endBuffer <= qmin):
-                    vtemp = min(min(vk),min(vk2),min(vk3))
-                    print 'min',min(vk),min(vk2),min(vk3),vtemp
+                    vtemp = min(vk)
+                    #print 'min',min(vk),min(vk2),min(vk3),vtemp
                 elif(self.endBuffer >= qmax):
-                    vtemp = max(max(vk),max(vk2),max(vk3))
-                    print 'max',max(vk),max(vk2),max(vk3),vtemp
+                    vtemp = max(vk)
+                    #print 'max',max(vk),max(vk2),max(vk3),vtemp
 
                 newRate = pRate + vtemp
                 #print 'vtemp = ',vtemp, 'newRate = ',newRate
@@ -340,6 +289,7 @@ class Fragment():
     def setDownloadDone(self):
         self.isDone = True
         self.block.downDoneSeq.append(self)
+        self.downBy.doneList.append(self)
         allDone = True
         for f in self.block.fragList:
             if(f.isDone==False):
@@ -357,7 +307,7 @@ class Buffer(Thread):
 
     def run(self):
         global slist, nowBlock, bufferLength, rateList
-        global timelineData, bufferLengthData, rateData, fig1, fig2, allStartTime, rateTimelineData
+        global timelineData, bufferLengthData, rateData, fig1, fig2, allStartTime, rateTimelineData, unchangedBlock
         while True:
             if(len(blockList)==0):
                 flg = False
@@ -377,7 +327,7 @@ class Buffer(Thread):
                     blockList.append(b)
                     print 'block',nowBlock,' -> ',b.fragNum
                     nowBlock = nowBlock + 1
-            elif(time() - allStartTime <=2000):
+            elif(time() - allStartTime >= -1):
                 myBlock = blockList[-1]
                 if(myBlock != None and myBlock.isDone==True):
                     myBlock.endTime = time()
@@ -420,6 +370,17 @@ class Buffer(Thread):
                     myBlock.endBuffer = bufferLength
                     slist.resort()
                     newSelect = myBlock.getNewRate()
+                    # force rate change!
+                    if(bufferLength>=qmax and newSelect == myBlock.rate):
+                        unchangedBlock = unchangedBlock + 1
+                        if(unchangedBlock >= 2 and newSelect<len(rateList)):
+                            newSelect = newSelect + 1
+                            unchangedBlock = 0
+                    elif(bufferLength<=qmin and newSelect == myBlock.rate):
+                        unchangedBlock = unchangedBlock + 1
+                        if(unchangedBlock >= 2 and newSelect<len(rateList) and newSelect>1):
+                            newSelect = newSelect - 1
+                            unchangedBlock = 0
                     #print 'getNew Select',newSelect
                     b = Block(nowBlock, slist, newSelect, 5)
                     b.startTime = time()
@@ -509,15 +470,15 @@ class serverConnect(Thread):
         global slist, blockList
         rate = 1
         #test speed
-        while True:
-        #if(self.s.getBandwidth()==None or self.s.getBandwidth()==0):
+        #while True:
+        if(self.s.getBandwidth()==None or self.s.getBandwidth()==0):
             self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.conn.connect((serverList[self.server][0], serverList[self.server][1]))
             #self.conn.setLimit(serverLimit[self.server])
             #rev, d = self.recv_timeout(1)
             rev, d = self.recv_timeout(rate)
             #print rev, d
-            if(rev>0 and d>0 and rev==dataPacket[rate-1]):
+            if(rev>0 and d>0):
                 print 'BW Testing:',self.name,'=' , rev/1024/d, 'KB/s','block = ',rev,'dur=',d
                 self.s.bw = rev/1024/d
         nowFrag = self.s.getDownloadFragment();
@@ -587,4 +548,4 @@ if __name__ == '__main__':
     #plt.interactive(True)
     #patch()
     slist = ServerList()
-    start(4)
+    start(3)
