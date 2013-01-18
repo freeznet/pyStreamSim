@@ -13,7 +13,7 @@ from threading import Thread
 
 
 sockIndex = 1
-serverList = [['42.96.148.242',1234],['42.121.78.93',1234],['49.212.204.220',1234],['60.28.160.80',1234],['sh.idcst.cn',1234],['49.212.204.220',1234],['sh.idcst.cn',1234]]
+serverList = [['42.121.132.130',1234],['42.121.14.186',1234],['42.121.125.177',1234],['60.28.160.80',1234],['sh.idcst.cn',1234],['49.212.204.220',1234],['sh.idcst.cn',1234]]
 #serverList = [['127.0.0.1',1234],['127.0.0.1',1235],['127.0.0.1',1236]]
 serverLimit = [62.5* 8 * 1024,125* 8 * 1024,187.5* 8 * 1024]
 
@@ -29,7 +29,7 @@ downloadDonePendList = []
 bufferLength = 0;
 nowFragID = 0;
 
-maxFragNum = 9
+maxFragNum = 10
 nowBlock = 0
 blockList = []
 
@@ -37,10 +37,10 @@ qmin = 15
 qmax = 50
 qlimit = 60
 sleepTime = 40
-cut = 3
+cut = 8
 kP = 1.1
 kD = 0.8
-maxTime = 1000
+maxTime = 1800
 
 slist = None
 
@@ -93,16 +93,16 @@ class Server():
         c = 0
         if(len(self.doneList)>=cut):
             for i in range(len(self.doneList)-cut, len(self.doneList)):
-                s = s + self.doneList[i].downBw*8
+                s = s + self.doneList[i].downBw
                 c = c + 1
         else:
             for i in range(0, len(self.doneList)):
-                s = s + self.doneList[i].downBw*8
+                s = s + self.doneList[i].downBw
                 c = c + 1
         if(c>0):
             return s / c
         else:
-            return self.getBandwidth()*8
+            return self.getBandwidth()
 
 class ServerList():
     def __init__(self):
@@ -203,7 +203,7 @@ class Block():
     def myFloor(self, a, b):
         t = a / b
         x = math.floor(t)
-        if(t-x>0.8):
+        if(t-x>0.7):
             x = x + 1
         return x
     def getalphan(self, n):
@@ -212,7 +212,8 @@ class Block():
         q = 0
         f = self.fragList[n]
         for i in range(0, self.serverSize):
-            q = q + self.getX(i, n) * f.downBw
+            #q = q + self.getX(i, n) * f.downBw
+            q = q + self.getX(i,n) * f.downByBw
         for j in range(0, self.serverSize):
             t = self.getX(j, n)
             m = 0
@@ -232,12 +233,10 @@ class Block():
         return ret
 
     def getNewRate(self):
-        global blockList, qmin, qmax
+        global blockList, qmin, qmax, kP, kD
         #pRate = rateList[self.rate-1]
         pRate = self.servers.getAvBw()
         newSelect = 0
-        kP = 1.1
-        kD = 0.8
         if(len(blockList)>=2):
             lastBlock = blockList[-2]
             if(self.endBuffer >= qmax or self.endBuffer <= qmin):
@@ -257,14 +256,14 @@ class Block():
                     fragDownDur = f.downDur
                     #print f.id,alphaN,q_fragtEnk,q_blockSk,q_blockEk,fragDownDur
                     vk[i] = ((1/(self.playtime*alphaN)) * kP * (q_blockEk - q0))+ ((1/(self.playtime*alphaN)) * kD * ((q_fragtEnk - q_blockSk) / (fragDownDur)));
-                    vk2[i] = ((1/(self.playtime*alphaN)) * 0.9 * (q_blockEk - q0))+ ((1/(self.playtime*alphaN)) * kD * ((q_fragtEnk - q_blockSk) / (fragDownDur)));
-                    vk3[i] = ((1/(self.playtime*alphaN)) * 0.8 * (q_blockEk - q0))+ ((1/(self.playtime*alphaN)) * kD * ((q_fragtEnk - q_blockSk) / (fragDownDur)));
+                    vk2[i] = ((1/(self.playtime*alphaN)) * 0.1 * (q_blockEk - q0))+ ((1/(self.playtime*alphaN)) * kD * ((q_fragtEnk - q_blockSk) / (fragDownDur)));
+                    vk3[i] = ((1/(self.playtime*alphaN)) * 0.05 * (q_blockEk - q0))+ ((1/(self.playtime*alphaN)) * kD * ((q_fragtEnk - q_blockSk) / (fragDownDur)));
                 if(self.endBuffer <= qmin):
-                    vtemp = max(min(vk),min(vk2),min(vk3))
-                    #print 'min',min(vk),min(vk2),min(vk3),vtemp
+                    vtemp = min(min(vk),min(vk2),min(vk3))
+                    print 'min',min(vk),min(vk2),min(vk3),vtemp
                 elif(self.endBuffer >= qmax):
-                    vtemp = max(max(vk),max(vk2),max(vk3))
-                    #print 'max',max(vk),max(vk2),max(vk3),vtemp
+                    vtemp = min(max(vk),max(vk2),max(vk3))
+                    print 'max',max(vk),max(vk2),max(vk3),vtemp
 
                 newRate = pRate + vtemp
                 print 'pRate=',pRate,'vtemp =',vtemp, 'newRate =',newRate
@@ -299,6 +298,7 @@ class Fragment():
         self.downBw = 0
         self.fragIDList = []
         self.fra = None
+        self.downByBw = 0;
     def setDownloadBy(self, server):
         self.downBy = server
     def setDownloadDone(self):
@@ -310,7 +310,7 @@ class Fragment():
             bufferLength = bufferLength + 5
             self.endBuffer = bufferLength
             rateVsTimeVsBufferData.append([self.endDownload,self.rateInt,self.endBuffer,self.fragID])
-            print '%s\t%d\t%d\t\t%.3f\t\t\t%.3fKbit/s\t\t\t%.2f\t%d\t'%(self.downBy.name,self.id,self.rateInt,self.downDur,self.downBw*8,self.endBuffer,self.endDownload)
+            print '%s\t%d\t%d\t\t%.3f\t\t\t%.3fKbit/s\t\t\t%.2f\t%d\t'%(self.downBy.name,self.id,self.rateInt,self.downDur,self.downBw,self.endBuffer,self.endDownload)
             doneBufferFrag = doneBufferFrag + 1
             self.fragIDList = [item.fragID for item in downloadDonePendList]
             self.fra = None
@@ -323,7 +323,7 @@ class Fragment():
                     bufferLength = bufferLength + 5
                     self.fra.endBuffer = bufferLength
                     rateVsTimeVsBufferData.append([self.fra.endDownload,self.fra.rateInt,self.fra.endBuffer,self.fra.fragID])
-                    print '%s\t%d\t%d\t\t%.3f\t\t\t%.3fKbit/s\t\t\t%.2f\t%d\t'%(self.fra.downBy.name,self.fra.id,self.fra.rateInt,self.fra.downDur,self.fra.downBw*8,self.fra.endBuffer,self.fra.endDownload)
+                    print '%s\t%d\t%d\t\t%.3f\t\t\t%.3fKbit/s\t\t\t%.2f\t%d\t'%(self.fra.downBy.name,self.fra.id,self.fra.rateInt,self.fra.downDur,self.fra.downBw,self.fra.endBuffer,self.fra.endDownload)
                     doneBufferFrag = doneBufferFrag + 1
                     downloadDonePendList.remove(self.fra)
                     self.fragIDList = [item.fragID for item in downloadDonePendList]
@@ -448,24 +448,30 @@ class Buffer(Thread):
                 bufferl = [item[2] for item in rateVsTimeVsBufferData]
                 id1 = [item[3] for item in rateVsTimeVsBufferData]
 
-                fig1 = plt.subplot(311)
+                fig1 = plt.subplot(411)
                 fig1.plot(timel, bufferl)
                 # print rateData
                 # print timelineData
-                fig2 = plt.subplot(312)
+                fig2 = plt.subplot(412)
                 fig2.plot(timel,ratel)
                 rateVsTimeVsBufferData.sort(key=lambda x: x[3])
                 rate2 = [item[1] for item in rateVsTimeVsBufferData]
                 id2 = [item[3] for item in rateVsTimeVsBufferData]
-                fig2 = plt.subplot(313)
+                fig2 = plt.subplot(413)
                 fig2.plot(id2,rate2)
                 for i in range(0,len(ratel)):
                     print '%d\t%d\t%.5f\t%.3f'%(id2[i],rate2[i],timel[i],bufferl[i])
                 print '####################################'
+                fig2 = plt.subplot(414)
                 for s in slist.list:
+                    frag1 = []
+                    bw1 = []
                     for ff in s.downloadedFrag:
-                        print '%d\t%d\t%.3f' % (s.id,ff.fragID,ff.downBw*8)
+                        print '%d\t%d\t%.3f' % (s.id,ff.fragID,ff.downBw)
+                        frag1.append(ff.endDownload)
+                        bw1.append(ff.downBw)
                     print '####################################'
+                    fig2.plot(frag1,bw1)
                 plt.show()
             else:
                 break
@@ -550,8 +556,8 @@ class serverConnect(Thread):
             rev, d = self.recv_timeout(rate)
             #print rev, d
             if(rev>0 and d>0):
-                print 'BW Testing:',self.name,'=' , rev/1024/d, 'KB/s','block = ',rev,'dur=',d
-                self.s.bw = rev/1024/d
+                print 'BW Testing:',self.name,'=' , rev/1024/d*8, 'Kbit/s','block = ',rev,'dur=',d
+                self.s.bw = rev/1024/d*8
         nowFrag = self.s.getDownloadFragment();
         while True:
             if(nowFrag!=None):
@@ -566,8 +572,9 @@ class serverConnect(Thread):
                 if(rev>0 and d>0):
                     #bufferLength = bufferLength + 5 - d
                     #print self.name,nowFrag.id,nowFrag.rateInt,d,int(rev/1024/d),bufferLength
-                    self.s.bw = rev/1024/d
+                    self.s.bw = rev/1024/d*8
                     nowFrag.downBw = self.s.bw
+                    nowFrag.downByBw = self.s.getavabw()
                     nowFrag.downDur = d
                     nowFrag.setDownloadDone()
                     #nowFrag.endBuffer = bufferLength
