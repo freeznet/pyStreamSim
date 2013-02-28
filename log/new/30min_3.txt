@@ -1,0 +1,1390 @@
+Bandwidth Testing start server_0
+Bandwidth Testing start server_1
+Bandwidth Testing start server_2
+BW Testing: server_2 = 928.615731423 Kbit/s block =  192000 dur= 1.61100006104
+BW Testing: server_1 = 813.928156624 Kbit/s block =  192000 dur= 1.83800005913
+BW Testing: server_0 = 752.8938141 Kbit/s block =  192000 dur= 1.98699998856
+block 0  ->  3
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.625			920.615Kbit/s			3.375	1359004239	
+server_1	1	300		1.834			815.703Kbit/s			8.166	1359004239	
+server_0	2	300		2.349			636.867Kbit/s			12.651	1359004240	
+block 1  ->  3 timeDiff = 4.46900010109
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.543			969.540Kbit/s			16.108	1359004241	
+server_1	1	300		1.879			796.168Kbit/s			20.772	1359004241	
+server_0	2	300		2.201			679.691Kbit/s			25.450	1359004242	
+block 2  ->  3 timeDiff = 6.77200007439
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.643			910.530Kbit/s			28.807	1359004244	
+server_1	1	300		1.992			751.004Kbit/s			33.458	1359004244	
+server_0	2	300		2.250			664.889Kbit/s			38.200	1359004244	
+block 3  ->  3 timeDiff = 9.12299990654
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.494			1001.339Kbit/s			41.706	1359004246	
+server_1	1	300		1.887			792.793Kbit/s			46.313	1359004246	
+server_0	2	300		2.199			680.309Kbit/s			51.001	1359004247	
+max 668.068042337 641.622329276 635.010901011 668.068042337
+pRate= 801.620652124 vtemp = 668.068042337 newRate = 1469.68869446
+block 4  ->  3 timeDiff = 11.5230000019
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	700		3.811			917.345Kbit/s			52.190	1359004250	
+server_1	1	700		4.505			776.027Kbit/s			56.496	1359004251	
+server_0	2	700		5.227			668.835Kbit/s			60.774	1359004252	
+in idle time...
+idle done...
+max 866.707997006 493.957531397 414.152191276 866.707997006
+pRate= 798.77692934 vtemp = 866.707997006 newRate = 1665.48492635
+block 5  ->  3 timeDiff = 37.6730000973
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.187			915.598Kbit/s			36.813	1359004281	
+server_1	1	1500		9.827			762.796Kbit/s			40.173	1359004283	
+server_0	2	1500		11.237			667.082Kbit/s			43.763	1359004284	
+block 6  ->  3 timeDiff = 48.9519999027
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.211			912.922Kbit/s			40.552	1359004292	
+server_1	1	1500		9.881			758.628Kbit/s			43.882	1359004294	
+server_0	2	1500		11.501			651.769Kbit/s			47.262	1359004296	
+block 7  ->  3 timeDiff = 60.8039999008
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.310			902.046Kbit/s			43.952	1359004304	
+server_1	1	1500		9.832			762.408Kbit/s			47.430	1359004306	
+server_0	2	1500		11.451			654.615Kbit/s			50.811	1359004308	
+max 76.0307827317 54.4839424649 49.0972323982 76.0307827317
+pRate= 790.396602433 vtemp = 76.0307827317 newRate = 866.427385165
+block 8  ->  3 timeDiff = 72.503000021
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.160			918.627Kbit/s			47.651	1359004316	
+server_1	1	1500		9.878			758.858Kbit/s			50.933	1359004317	
+server_0	2	1500		11.450			654.672Kbit/s			54.361	1359004319	
+max 272.594467976 148.544758779 119.631016234 272.594467976
+pRate= 788.68712412 vtemp = 272.594467976 newRate = 1061.2815921
+block 9  ->  3 timeDiff = 84.2060000896
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.829			903.608Kbit/s			45.532	1359004333	
+server_1	1	2500		16.533			755.822Kbit/s			47.828	1359004336	
+server_0	2	2500		18.901			661.129Kbit/s			50.460	1359004339	
+max 2.51284575595 -9.72743445592 -12.7875045089 2.51284575595
+pRate= 783.485462363 vtemp = 2.51284575595 newRate = 785.998308119
+block 10  ->  3 timeDiff = 103.457000017
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.704			911.851Kbit/s			41.756	1359004352	
+server_1	1	2500		16.529			756.005Kbit/s			43.931	1359004355	
+server_0	2	2500		19.601			637.518Kbit/s			45.859	1359004358	
+block 11  ->  3 timeDiff = 123.407000065
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.811			904.786Kbit/s			37.048	1359004372	
+server_1	1	2500		16.633			751.278Kbit/s			39.226	1359004375	
+server_0	2	2500		19.200			650.833Kbit/s			41.659	1359004378	
+block 12  ->  3 timeDiff = 142.857000113
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.842			902.760Kbit/s			32.817	1359004392	
+server_1	1	2500		16.597			752.907Kbit/s			35.062	1359004395	
+server_0	2	2500		19.252			649.075Kbit/s			37.407	1359004398	
+block 13  ->  3 timeDiff = 162.459000111
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.828			903.674Kbit/s			28.579	1359004411	
+server_1	1	2500		16.506			757.058Kbit/s			30.901	1359004414	
+server_0	2	2500		17.801			701.983Kbit/s			34.606	1359004416	
+block 14  ->  3 timeDiff = 180.607000113
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.838			903.021Kbit/s			25.768	1359004430	
+server_1	1	2500		16.728			747.011Kbit/s			27.878	1359004432	
+server_0	2	2500		18.501			675.423Kbit/s			31.105	1359004435	
+block 15  ->  3 timeDiff = 199.857000113
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.711			911.385Kbit/s			22.394	1359004449	
+server_1	1	2500		16.629			751.458Kbit/s			24.476	1359004452	
+server_0	2	2500		18.299			682.879Kbit/s			27.806	1359004454	
+block 16  ->  3 timeDiff = 219.305999994
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.846			902.499Kbit/s			18.960	1359004468	
+server_1	1	2500		16.647			750.646Kbit/s			21.159	1359004471	
+server_0	2	2500		18.400			679.130Kbit/s			24.406	1359004474	
+block 17  ->  3 timeDiff = 238.861000061
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.745			909.131Kbit/s			15.661	1359004488	
+server_1	1	2500		16.553			754.908Kbit/s			17.853	1359004491	
+server_0	2	2500		18.402			679.057Kbit/s			21.004	1359004494	
+block 18  ->  3 timeDiff = 258.559000015
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.704			911.851Kbit/s			12.300	1359004507	
+server_1	1	2500		16.520			756.416Kbit/s			14.484	1359004510	
+server_0	2	2500		18.250			684.712Kbit/s			17.754	1359004513	
+min -254.899261547 -173.491816808 -153.139955624 -254.899261547
+pRate= 778.078372884 vtemp = -254.899261547 newRate = 523.179111337
+block 19  ->  3 timeDiff = 278.006000042
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.511			990.073Kbit/s			21.243	1359004515	
+server_1	1	300		1.732			863.741Kbit/s			26.022	1359004515	
+server_0	2	300		2.901			515.684Kbit/s			29.853	1359004517	
+block 20  ->  3 timeDiff = 282.101000071
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.513			988.764Kbit/s			33.340	1359004519	
+server_1	1	300		1.838			813.928Kbit/s			38.015	1359004519	
+server_0	2	300		2.201			679.691Kbit/s			42.652	1359004520	
+block 21  ->  3 timeDiff = 284.552999973
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.616			925.743Kbit/s			46.036	1359004521	
+server_1	1	300		1.857			805.600Kbit/s			50.795	1359004522	
+server_0	2	300		2.101			712.042Kbit/s			55.551	1359004522	
+max 944.728702313 797.667181659 760.901801496 944.728702313
+pRate= 791.449725455 vtemp = 944.728702313 newRate = 1736.17842777
+block 22  ->  3 timeDiff = 286.90199995
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.194			914.816Kbit/s			52.357	1359004530	
+server_1	1	1500		9.946			753.670Kbit/s			55.605	1359004532	
+server_0	2	1500		11.400			657.544Kbit/s			59.151	1359004534	
+max 623.038940063 286.358934196 215.699997376 623.038940063
+pRate= 791.473675212 vtemp = 623.038940063 newRate = 1414.51261528
+block 23  ->  3 timeDiff = 298.503999949
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.840			902.890Kbit/s			50.311	1359004547	
+server_1	1	2500		16.547			755.182Kbit/s			52.604	1359004550	
+server_0	2	2500		17.501			714.016Kbit/s			56.650	1359004551	
+max 400.483391442 160.795509457 116.816237093 400.483391442
+pRate= 792.57228232 vtemp = 400.483391442 newRate = 1193.05567376
+block 24  ->  3 timeDiff = 316.358999968
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.787			906.361Kbit/s			47.863	1359004565	
+server_1	1	2500		16.484			758.068Kbit/s			50.166	1359004568	
+server_0	2	2500		18.401			679.094Kbit/s			53.249	1359004571	
+max 153.99439935 66.7813753106 45.1679012227 153.99439935
+pRate= 793.040945545 vtemp = 153.99439935 newRate = 947.035344895
+block 25  ->  3 timeDiff = 335.907999992
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	3500		19.288			907.092Kbit/s			38.961	1359004590	
+server_1	1	3500		23.387			748.108Kbit/s			39.862	1359004594	
+server_0	2	3500		24.601			711.191Kbit/s			43.648	1359004597	
+block 26  ->  3 timeDiff = 361.71600008
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	3500		19.342			904.560Kbit/s			29.306	1359004616	
+server_1	1	3500		23.346			749.422Kbit/s			30.302	1359004620	
+server_0	2	3500		25.151			695.638Kbit/s			33.497	1359004624	
+block 27  ->  3 timeDiff = 388.812999964
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	3500		19.390			902.321Kbit/s			19.107	1359004643	
+server_1	1	3500		23.390			748.012Kbit/s			20.107	1359004647	
+server_0	2	3500		25.251			692.883Kbit/s			23.246	1359004651	
+block 28  ->  3 timeDiff = 416.161000013
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	3500		19.361			903.672Kbit/s			8.885	1359004671	
+server_1	1	3500		23.333			749.839Kbit/s			9.913	1359004675	
+server_0	2	3500		25.102			696.996Kbit/s			13.144	1359004679	
+min -613.165463063 -361.120165509 -298.108841121 -613.165463063
+pRate= 787.281721841 vtemp = -613.165463063 newRate = 174.116258778
+block 29  ->  3 timeDiff = 443.463999987
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.641			911.639Kbit/s			16.503	1359004680	
+server_1	1	300		1.891			791.116Kbit/s			21.253	1359004680	
+server_0	2	300		3.850			388.571Kbit/s			24.294	1359004685	
+block 30  ->  3 timeDiff = 449.451999903
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.641			911.639Kbit/s			27.653	1359004686	
+server_1	1	300		1.946			768.756Kbit/s			32.348	1359004686	
+server_0	2	300		2.216			675.090Kbit/s			37.078	1359004687	
+block 31  ->  3 timeDiff = 451.818000078
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.527			979.699Kbit/s			40.551	1359004688	
+server_1	1	300		1.732			863.741Kbit/s			45.346	1359004689	
+server_0	2	300		2.201			679.691Kbit/s			49.877	1359004689	
+block 32  ->  3 timeDiff = 454.117000103
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.633			916.105Kbit/s			53.244	1359004691	
+server_1	1	300		1.856			806.034Kbit/s			58.021	1359004691	
+server_0	2	300		2.051			729.400Kbit/s			62.826	1359004691	
+in idle time...
+idle done...
+max 1334.36058112 993.727724257 910.05162229 1334.36058112
+pRate= 784.63411726 vtemp = 1334.36058112 newRate = 2118.99469838
+block 33  ->  3 timeDiff = 479.245000124
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.310			902.046Kbit/s			36.690	1359004723	
+server_1	1	1500		9.806			764.430Kbit/s			40.194	1359004724	
+server_0	2	1500		11.238			667.023Kbit/s			43.762	1359004726	
+block 34  ->  3 timeDiff = 490.523999929
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.308			902.263Kbit/s			40.454	1359004734	
+server_1	1	1500		9.846			761.324Kbit/s			43.916	1359004735	
+server_0	2	1500		11.451			654.615Kbit/s			47.311	1359004737	
+block 35  ->  3 timeDiff = 502.224999905
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.292			904.004Kbit/s			44.019	1359004746	
+server_1	1	1500		9.827			762.796Kbit/s			47.484	1359004747	
+server_0	2	1500		11.399			657.602Kbit/s			50.912	1359004749	
+max 80.0352739666 56.3950012528 50.4849330743 80.0352739666
+pRate= 781.17058688 vtemp = 80.0352739666 newRate = 861.205860846
+block 36  ->  3 timeDiff = 513.972000122
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.191			915.151Kbit/s			47.721	1359004757	
+server_1	1	1500		9.847			761.247Kbit/s			51.065	1359004759	
+server_0	2	1500		11.351			660.382Kbit/s			54.561	1359004761	
+max 287.833046126 150.52754737 121.171874558 287.833046126
+pRate= 780.598601105 vtemp = 287.833046126 newRate = 1068.43164723
+block 37  ->  3 timeDiff = 525.674999952
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.846			902.499Kbit/s			45.715	1359004775	
+server_1	1	2500		16.549			755.091Kbit/s			48.012	1359004777	
+server_0	2	2500		19.252			649.075Kbit/s			50.309	1359004780	
+max -6.78516092749 -14.6837804606 -16.6584353438 -6.78516092749
+pRate= 789.571049043 vtemp = -6.78516092749 newRate = 782.785888115
+block 38  ->  3 timeDiff = 545.280999899
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.861			901.522Kbit/s			41.448	1359004794	
+server_1	1	2500		16.606			752.499Kbit/s			43.703	1359004797	
+server_0	2	2500		19.249			649.177Kbit/s			46.060	1359004800	
+block 39  ->  3 timeDiff = 564.878000021
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.803			905.310Kbit/s			37.257	1359004814	
+server_1	1	2500		16.484			758.068Kbit/s			39.576	1359004816	
+server_0	2	2500		19.152			652.464Kbit/s			41.908	1359004819	
+block 40  ->  3 timeDiff = 584.378999949
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.840			902.890Kbit/s			33.068	1359004833	
+server_1	1	2500		16.659			750.105Kbit/s			35.249	1359004836	
+server_0	2	2500		19.250			649.143Kbit/s			37.658	1359004839	
+block 41  ->  3 timeDiff = 603.878000021
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.829			903.608Kbit/s			28.829	1359004853	
+server_1	1	2500		16.629			751.458Kbit/s			31.029	1359004856	
+server_0	2	2500		19.251			649.109Kbit/s			33.407	1359004859	
+block 42  ->  3 timeDiff = 623.476000071
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.818			904.328Kbit/s			24.589	1359004872	
+server_1	1	2500		16.642			750.871Kbit/s			26.765	1359004875	
+server_0	2	2500		19.218			650.224Kbit/s			29.189	1359004878	
+block 43  ->  3 timeDiff = 643.046000004
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.832			903.412Kbit/s			20.357	1359004892	
+server_1	1	2500		16.543			755.365Kbit/s			22.646	1359004895	
+server_0	2	2500		19.251			649.109Kbit/s			24.938	1359004898	
+block 44  ->  3 timeDiff = 662.542999983
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.847			902.434Kbit/s			16.091	1359004911	
+server_1	1	2500		16.646			750.691Kbit/s			18.292	1359004914	
+server_0	2	2500		18.152			688.409Kbit/s			21.786	1359004916	
+block 45  ->  3 timeDiff = 681.045000076
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.733			909.925Kbit/s			13.053	1359004930	
+server_1	1	2500		16.627			751.549Kbit/s			15.159	1359004933	
+server_0	2	2500		18.052			692.222Kbit/s			18.734	1359004935	
+min -183.383464554 -137.642866737 -126.207717283 -183.383464554
+pRate= 772.245582825 vtemp = -183.383464554 newRate = 588.862118271
+block 46  ->  3 timeDiff = 700.046000004
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.602			933.833Kbit/s			22.132	1359004937	
+server_1	1	300		1.834			815.703Kbit/s			26.900	1359004937	
+server_0	2	300		2.900			515.862Kbit/s			30.834	1359004939	
+block 47  ->  3 timeDiff = 704.237999916
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.624			921.182Kbit/s			34.210	1359004941	
+server_1	1	300		1.834			815.703Kbit/s			39.000	1359004941	
+server_0	2	300		2.201			679.691Kbit/s			43.633	1359004942	
+block 48  ->  3 timeDiff = 706.588000059
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.542			970.169Kbit/s			47.091	1359004943	
+server_1	1	300		1.832			816.594Kbit/s			51.801	1359004944	
+server_0	2	300		2.100			712.381Kbit/s			56.533	1359004944	
+max 973.636937165 804.635751926 762.385455617 973.636937165
+pRate= 783.076380627 vtemp = 973.636937165 newRate = 1756.71331779
+block 49  ->  3 timeDiff = 708.890000105
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.293			903.895Kbit/s			53.240	1359004952	
+server_1	1	1500		9.836			762.098Kbit/s			56.697	1359004954	
+server_0	2	1500		11.372			659.163Kbit/s			60.161	1359004956	
+in idle time...
+idle done...
+max 688.358602361 317.464274398 238.615743407 688.358602361
+pRate= 783.950560264 vtemp = 688.358602361 newRate = 1472.30916262
+block 50  ->  3 timeDiff = 740.674999952
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.342			898.585Kbit/s			36.658	1359004984	
+server_1	1	1500		9.736			769.926Kbit/s			40.264	1359004986	
+server_0	2	1500		11.350			660.441Kbit/s			43.650	1359004987	
+block 51  ->  3 timeDiff = 752.065999985
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.292			904.004Kbit/s			40.358	1359004995	
+server_1	1	1500		9.839			761.866Kbit/s			43.811	1359004997	
+server_0	2	1500		11.500			651.826Kbit/s			47.150	1359004999	
+block 52  ->  3 timeDiff = 763.76699996
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.290			904.222Kbit/s			43.860	1359005007	
+server_1	1	1500		9.703			772.545Kbit/s			47.447	1359005009	
+server_0	2	1500		11.021			680.156Kbit/s			51.129	1359005010	
+max 97.3665185826 67.6738417127 60.2506724952 97.3665185826
+pRate= 785.980893627 vtemp = 97.3665185826 newRate = 883.347412209
+block 53  ->  3 timeDiff = 775.13499999
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.824			903.935Kbit/s			42.305	1359005024	
+server_1	1	2500		16.529			756.005Kbit/s			44.600	1359005027	
+server_0	2	2500		17.651			707.949Kbit/s			48.478	1359005028	
+block 54  ->  3 timeDiff = 793.390000105
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.824			903.935Kbit/s			39.654	1359005042	
+server_1	1	2500		16.628			751.503Kbit/s			41.850	1359005045	
+server_0	2	2500		18.151			688.447Kbit/s			45.327	1359005048	
+block 55  ->  3 timeDiff = 812.838000059
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.799			905.573Kbit/s			36.528	1359005062	
+server_1	1	2500		16.634			751.232Kbit/s			38.693	1359005065	
+server_0	2	2500		18.301			682.804Kbit/s			42.026	1359005067	
+block 56  ->  3 timeDiff = 832.443000078
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.810			904.852Kbit/s			33.216	1359005081	
+server_1	1	2500		16.691			748.667Kbit/s			35.335	1359005084	
+server_0	2	2500		18.254			684.562Kbit/s			38.772	1359005087	
+block 57  ->  3 timeDiff = 851.993999958
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.841			902.825Kbit/s			29.931	1359005101	
+server_1	1	2500		16.545			755.273Kbit/s			32.227	1359005104	
+server_0	2	2500		18.302			682.767Kbit/s			35.470	1359005107	
+block 58  ->  3 timeDiff = 871.589999914
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.797			905.704Kbit/s			26.673	1359005120	
+server_1	1	2500		16.647			750.646Kbit/s			28.823	1359005123	
+server_0	2	2500		18.251			684.675Kbit/s			32.219	1359005126	
+block 59  ->  3 timeDiff = 891.039999962
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.824			903.935Kbit/s			23.395	1359005140	
+server_1	1	2500		16.606			752.499Kbit/s			25.613	1359005143	
+server_0	2	2500		18.300			682.842Kbit/s			28.919	1359005146	
+block 60  ->  3 timeDiff = 910.637000084
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.848			902.369Kbit/s			20.071	1359005160	
+server_1	1	2500		16.680			749.161Kbit/s			22.239	1359005162	
+server_0	2	2500		18.151			688.447Kbit/s			25.768	1359005165	
+block 61  ->  3 timeDiff = 930.089999914
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.803			905.310Kbit/s			16.965	1359005179	
+server_1	1	2500		16.631			751.368Kbit/s			19.137	1359005182	
+server_0	2	2500		18.251			684.675Kbit/s			22.517	1359005185	
+block 62  ->  3 timeDiff = 949.638999939
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.834			903.282Kbit/s			13.683	1359005199	
+server_1	1	2500		16.629			751.458Kbit/s			15.888	1359005201	
+server_0	2	2500		18.302			682.767Kbit/s			19.215	1359005204	
+min -149.185821032 -120.790394098 -113.691537365 -149.185821032
+pRate= 779.90385227 vtemp = -149.185821032 newRate = 630.718031238
+block 63  ->  3 timeDiff = 969.237999916
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.637			913.867Kbit/s			22.578	1359005206	
+server_1	1	300		1.829			817.933Kbit/s			27.386	1359005206	
+server_0	2	300		2.800			534.286Kbit/s			31.415	1359005208	
+block 64  ->  3 timeDiff = 973.332000017
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.697			881.556Kbit/s			34.718	1359005210	
+server_1	1	300		1.796			832.962Kbit/s			39.619	1359005210	
+server_0	2	300		2.249			665.185Kbit/s			44.166	1359005211	
+block 65  ->  3 timeDiff = 975.782999992
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	300		1.637			913.867Kbit/s			47.529	1359005213	
+server_1	1	300		1.833			816.148Kbit/s			52.333	1359005213	
+server_0	2	300		2.100			712.381Kbit/s			57.066	1359005213	
+max 1026.73273695 839.284401391 792.422317501 1026.73273695
+pRate= 782.8050535 vtemp = 1026.73273695 newRate = 1809.53779045
+block 66  ->  3 timeDiff = 978.084000111
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.196			914.592Kbit/s			53.870	1359005221	
+server_1	1	1500		9.959			752.686Kbit/s			57.107	1359005223	
+server_0	2	1500		11.376			658.931Kbit/s			60.690	1359005225	
+in idle time...
+idle done...
+max 716.48982496 333.087602424 249.943781943 716.48982496
+pRate= 782.187756241 vtemp = 716.48982496 newRate = 1498.6775812
+block 67  ->  3 timeDiff = 1010.40199995
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.250			908.606Kbit/s			36.750	1359005254	
+server_1	1	1500		9.891			757.861Kbit/s			40.109	1359005255	
+server_0	2	1500		11.336			661.256Kbit/s			43.664	1359005257	
+block 68  ->  3 timeDiff = 1021.77200007
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.296			903.568Kbit/s			40.368	1359005265	
+server_1	1	1500		9.805			764.508Kbit/s			43.859	1359005267	
+server_0	2	1500		11.451			654.615Kbit/s			47.213	1359005269	
+block 69  ->  3 timeDiff = 1033.47099996
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.167			917.840Kbit/s			44.046	1359005277	
+server_1	1	1500		9.806			764.430Kbit/s			47.407	1359005278	
+server_0	2	1500		11.501			651.769Kbit/s			50.712	1359005280	
+max 69.3786886521 50.6741114544 45.997967155 69.3786886521
+pRate= 780.681439873 vtemp = 69.3786886521 newRate = 850.060128525
+block 70  ->  3 timeDiff = 1045.22200012
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	1500		8.288			904.440Kbit/s			47.424	1359005289	
+server_1	1	1500		9.807			764.352Kbit/s			50.905	1359005290	
+server_0	2	1500		11.051			678.310Kbit/s			54.661	1359005292	
+max 294.14786265 158.99496647 128.575009078 294.14786265
+pRate= 781.081225162 vtemp = 294.14786265 newRate = 1075.22908781
+block 71  ->  3 timeDiff = 1056.62100005
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.838			903.021Kbit/s			45.823	1359005306	
+server_1	1	2500		16.637			751.097Kbit/s			48.024	1359005308	
+server_0	2	2500		12.401			1007.661Kbit/s			53.024	1359005305	
+max 143.981237638 65.1042450662 45.3849969232 143.981237638
+pRate= 797.568406874 vtemp = 143.981237638 newRate = 941.549644512
+block 72  ->  3 timeDiff = 1073.30599999
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	2500		13.810			904.852Kbit/s			44.214	1359005322	
+server_1	1	2500		16.790			744.253Kbit/s			46.234	1359005325	
+server_0	2	2500		11.460			1090.401Kbit/s			51.234	1359005320	
+max 52.4405348294 17.3325774505 8.55558810572 52.4405348294
+pRate= 812.560205712 vtemp = 52.4405348294 newRate = 865.000740541
+block 73  ->  3 timeDiff = 1090.24300003
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	3500		19.360			903.719Kbit/s			36.874	1359005345	
+server_1	1	3500		21.201			825.244Kbit/s			40.033	1359005347	
+server_0	2	3500		16.120			1085.360Kbit/s			45.033	1359005341	
+block 74  ->  3 timeDiff = 1111.69900012
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	3500		19.387			902.460Kbit/s			30.646	1359005366	
+server_0	1	3500		16.023			1091.930Kbit/s			35.646	1359005363	
+server_1	2	3500		23.152			755.701Kbit/s			36.881	1359005371	
+block 75  ->  3 timeDiff = 1135.59200001
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_2	0	3500		19.347			904.326Kbit/s			22.534	1359005390	
+server_0	1	3500		16.010			1092.817Kbit/s			27.534	1359005387	
+server_1	2	3500		22.650			772.450Kbit/s			29.231	1359005394	
+block 76  ->  3 timeDiff = 1159.3900001
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	3500		16.011			1092.749Kbit/s			18.220	1359005410	
+server_2	1	3500		19.287			907.140Kbit/s			19.944	1359005414	
+server_1	2	3500		22.351			782.784Kbit/s			21.880	1359005418	
+block 77  ->  3 timeDiff = 1182.93899989
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	3500		16.010			1092.817Kbit/s			10.870	1359005434	
+server_2	1	3500		19.224			910.112Kbit/s			12.656	1359005437	
+server_1	2	3500		22.401			781.037Kbit/s			14.479	1359005442	
+min -537.297597726 -322.227110514 -268.459488711 -537.297597726
+pRate= 902.043008187 vtemp = -537.297597726 newRate = 364.745410461
+block 78  ->  3 timeDiff = 1206.6400001
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	300		1.387			1078.587Kbit/s			18.092	1359005443	
+server_2	1	300		1.610			929.193Kbit/s			22.869	1359005443	
+server_1	2	300		2.600			575.385Kbit/s			26.879	1359005445	
+block 79  ->  3 timeDiff = 1210.38700008
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	300		1.410			1060.993Kbit/s			30.469	1359005447	
+server_2	1	300		1.647			908.318Kbit/s			35.232	1359005447	
+server_1	2	300		1.951			766.786Kbit/s			39.928	1359005447	
+block 80  ->  3 timeDiff = 1212.43099999
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	300		1.373			1089.585Kbit/s			43.555	1359005449	
+server_2	1	300		1.610			929.193Kbit/s			48.318	1359005449	
+server_1	2	300		1.985			753.652Kbit/s			52.943	1359005450	
+max 971.677750741 875.621886939 853.535998811 971.677750741
+pRate= 916.347417977 vtemp = 971.677750741 newRate = 1888.02516872
+block 81  ->  3 timeDiff = 1214.5710001
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	1500		6.864			1092.075Kbit/s			51.079	1359005457	
+server_2	1	1500		8.210			913.033Kbit/s			54.733	1359005458	
+server_1	2	1500		9.851			760.938Kbit/s			58.092	1359005460	
+max 655.607641645 326.941635829 253.158166336 655.607641645
+pRate= 914.335857676 vtemp = 655.607641645 newRate = 1569.94349932
+block 82  ->  3 timeDiff = 1224.51600003
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	1500		6.888			1088.269Kbit/s			56.204	1359005466	
+server_2	1	1500		8.341			898.693Kbit/s			59.751	1359005468	
+server_1	2	1500		9.901			757.095Kbit/s			63.191	1359005470	
+in idle time...
+idle done...
+max 1098.85559119 525.604262594 390.344318462 1098.85559119
+pRate= 914.0844291 vtemp = 1098.85559119 newRate = 2012.94002029
+block 83  ->  3 timeDiff = 1257.86299992
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	1500		6.859			1092.871Kbit/s			38.141	1359005500	
+server_2	1	1500		8.247			908.937Kbit/s			41.753	1359005501	
+server_1	2	1500		9.847			761.247Kbit/s			45.153	1359005503	
+block 84  ->  3 timeDiff = 1267.75600004
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	1500		6.861			1092.552Kbit/s			43.292	1359005510	
+server_2	1	1500		8.244			909.267Kbit/s			46.909	1359005511	
+server_1	2	1500		9.939			754.201Kbit/s			50.214	1359005513	
+max 73.1920273503 66.837379091 65.2487170262 73.1920273503
+pRate= 912.701465135 vtemp = 73.1920273503 newRate = 985.893492485
+block 85  ->  3 timeDiff = 1277.94700003
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.436			1092.690Kbit/s			43.778	1359005524	
+server_2	1	2500		13.711			911.385Kbit/s			46.503	1359005527	
+server_1	2	2500		16.652			750.420Kbit/s			48.562	1359005530	
+block 86  ->  3 timeDiff = 1294.8499999
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.456			1090.782Kbit/s			42.106	1359005541	
+server_2	1	2500		13.716			911.053Kbit/s			44.846	1359005544	
+server_1	2	2500		16.712			747.726Kbit/s			46.850	1359005547	
+block 87  ->  3 timeDiff = 1311.80299997
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.434			1092.881Kbit/s			40.416	1359005558	
+server_2	1	2500		13.811			904.786Kbit/s			43.039	1359005561	
+server_1	2	2500		16.750			746.030Kbit/s			45.100	1359005564	
+block 88  ->  3 timeDiff = 1328.70799994
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.437			1092.594Kbit/s			38.663	1359005575	
+server_2	1	2500		13.817			904.393Kbit/s			41.283	1359005578	
+server_1	2	2500		16.639			751.007Kbit/s			43.461	1359005581	
+block 89  ->  3 timeDiff = 1345.59800005
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.421			1094.125Kbit/s			37.040	1359005592	
+server_2	1	2500		13.839			902.955Kbit/s			39.622	1359005595	
+server_1	2	2500		16.153			773.602Kbit/s			42.308	1359005597	
+block 90  ->  3 timeDiff = 1362.0
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.433			1092.976Kbit/s			35.875	1359005609	
+server_2	1	2500		13.822			904.066Kbit/s			38.486	1359005611	
+server_1	2	2500		15.901			785.863Kbit/s			41.407	1359005614	
+block 91  ->  3 timeDiff = 1378.49300003
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.391			1097.006Kbit/s			35.016	1359005625	
+server_2	1	2500		13.839			902.955Kbit/s			37.568	1359005627	
+server_1	2	2500		16.150			773.746Kbit/s			40.257	1359005631	
+block 92  ->  3 timeDiff = 1395.49099994
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.423			1093.933Kbit/s			33.834	1359005642	
+server_2	1	2500		13.833			903.347Kbit/s			36.424	1359005644	
+server_1	2	2500		16.051			778.518Kbit/s			39.206	1359005647	
+block 93  ->  3 timeDiff = 1412.24099994
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.460			1090.401Kbit/s			32.746	1359005659	
+server_2	1	2500		13.842			902.760Kbit/s			35.364	1359005661	
+server_1	2	2500		16.051			778.518Kbit/s			38.155	1359005664	
+block 94  ->  3 timeDiff = 1429.09800005
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.460			1090.401Kbit/s			31.695	1359005676	
+server_2	1	2500		13.809			904.917Kbit/s			34.346	1359005678	
+server_1	2	2500		16.051			778.518Kbit/s			37.104	1359005681	
+block 95  ->  3 timeDiff = 1445.9920001
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.460			1090.401Kbit/s			30.644	1359005693	
+server_2	1	2500		13.812			904.721Kbit/s			33.292	1359005695	
+server_1	2	2500		16.051			778.518Kbit/s			36.053	1359005698	
+block 96  ->  3 timeDiff = 1462.84500003
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.424			1093.838Kbit/s			29.629	1359005709	
+server_2	1	2500		13.811			904.786Kbit/s			32.242	1359005712	
+server_1	2	2500		16.052			778.470Kbit/s			35.001	1359005715	
+block 97  ->  3 timeDiff = 1479.70000005
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.438			1092.499Kbit/s			28.563	1359005726	
+server_2	1	2500		13.835			903.216Kbit/s			31.166	1359005729	
+server_1	2	2500		16.002			780.902Kbit/s			33.999	1359005732	
+block 98  ->  3 timeDiff = 1496.54299998
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.460			1090.401Kbit/s			27.539	1359005743	
+server_2	1	2500		13.837			903.086Kbit/s			30.162	1359005745	
+server_1	2	2500		16.051			778.518Kbit/s			32.948	1359005748	
+block 99  ->  3 timeDiff = 1513.44400001
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.460			1090.401Kbit/s			26.488	1359005760	
+server_2	1	2500		13.841			902.825Kbit/s			29.107	1359005762	
+server_1	2	2500		16.001			780.951Kbit/s			31.947	1359005765	
+block 100  ->  3 timeDiff = 1530.398
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.473			1089.166Kbit/s			25.474	1359005777	
+server_2	1	2500		13.822			904.066Kbit/s			28.125	1359005779	
+server_1	2	2500		16.550			755.045Kbit/s			30.397	1359005783	
+block 101  ->  3 timeDiff = 1547.79099989
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.524			1084.346Kbit/s			23.873	1359005794	
+server_2	1	2500		13.811			904.786Kbit/s			26.586	1359005797	
+server_1	2	2500		15.900			785.912Kbit/s			29.497	1359005799	
+block 102  ->  3 timeDiff = 1564.148
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.461			1090.306Kbit/s			23.036	1359005811	
+server_2	1	2500		13.811			904.786Kbit/s			25.686	1359005813	
+server_1	2	2500		16.051			778.518Kbit/s			28.446	1359005816	
+block 103  ->  3 timeDiff = 1580.9920001
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.474			1089.071Kbit/s			21.972	1359005828	
+server_2	1	2500		13.794			905.901Kbit/s			24.652	1359005830	
+server_1	2	2500		16.052			778.470Kbit/s			27.394	1359005833	
+block 104  ->  3 timeDiff = 1597.84200001
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.423			1093.933Kbit/s			20.971	1359005844	
+server_2	1	2500		13.838			903.021Kbit/s			23.556	1359005847	
+server_1	2	2500		16.001			780.951Kbit/s			26.393	1359005850	
+block 105  ->  3 timeDiff = 1614.69199991
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.438			1092.499Kbit/s			19.955	1359005861	
+server_2	1	2500		13.779			906.887Kbit/s			22.614	1359005864	
+server_1	2	2500		16.152			773.650Kbit/s			25.241	1359005867	
+block 106  ->  3 timeDiff = 1631.69300008
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.460			1090.401Kbit/s			18.781	1359005878	
+server_2	1	2500		13.741			909.395Kbit/s			21.500	1359005881	
+server_1	2	2500		15.900			785.912Kbit/s			24.341	1359005884	
+block 107  ->  3 timeDiff = 1648.44700003
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.461			1090.306Kbit/s			17.880	1359005895	
+server_2	1	2500		13.824			903.935Kbit/s			20.517	1359005897	
+server_1	2	2500		16.050			778.567Kbit/s			23.291	1359005900	
+block 108  ->  3 timeDiff = 1665.44199991
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.424			1093.838Kbit/s			16.867	1359005912	
+server_2	1	2500		13.711			911.385Kbit/s			19.580	1359005914	
+server_1	2	2500		16.051			778.518Kbit/s			22.240	1359005917	
+block 109  ->  3 timeDiff = 1682.2980001
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.438			1092.499Kbit/s			15.802	1359005929	
+server_2	1	2500		13.702			911.984Kbit/s			18.538	1359005931	
+server_1	2	2500		16.052			778.470Kbit/s			21.188	1359005934	
+block 110  ->  3 timeDiff = 1699.14199996
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.437			1092.594Kbit/s			14.751	1359005946	
+server_2	1	2500		13.689			912.850Kbit/s			17.499	1359005948	
+server_1	2	2500		16.001			780.951Kbit/s			20.187	1359005951	
+block 111  ->  3 timeDiff = 1715.9920001
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	2500		11.437			1092.594Kbit/s			13.750	1359005963	
+server_2	1	2500		13.696			912.383Kbit/s			16.491	1359005965	
+server_1	2	2500		16.153			773.602Kbit/s			19.034	1359005968	
+min -182.708153899 -140.517408932 -129.969722691 -182.708153899
+pRate= 926.713615427 vtemp = -182.708153899 newRate = 744.005461528
+block 112  ->  3 timeDiff = 1733.00200009
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	700		3.212			1088.418Kbit/s			20.822	1359005971	
+server_2	1	700		3.843			909.706Kbit/s			25.191	1359005972	
+server_1	2	700		4.900			713.469Kbit/s			29.134	1359005974	
+block 113  ->  3 timeDiff = 1738.69300008
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	700		3.213			1088.080Kbit/s			30.921	1359005977	
+server_2	1	700		3.934			888.663Kbit/s			35.200	1359005978	
+server_1	2	700		4.500			776.889Kbit/s			39.634	1359005978	
+block 114  ->  3 timeDiff = 1743.28699994
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	700		3.211			1088.757Kbit/s			41.423	1359005982	
+server_2	1	700		3.842			909.943Kbit/s			45.792	1359005982	
+server_1	2	700		4.503			776.371Kbit/s			50.131	1359005983	
+max 295.568415576 291.529450559 290.519709304 295.568415576
+pRate= 922.698897373 vtemp = 295.568415576 newRate = 1218.26731295
+block 115  ->  3 timeDiff = 1748.04500008
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	700		3.189			1096.268Kbit/s			51.942	1359005986	
+server_2	1	700		3.791			922.184Kbit/s			56.340	1359005987	
+server_1	2	700		4.652			751.505Kbit/s			60.479	1359005988	
+in idle time...
+idle done...
+max 1013.63178754 618.272303906 523.164271722 1013.63178754
+pRate= 922.580098008 vtemp = 1013.63178754 newRate = 1936.21188555
+block 116  ->  3 timeDiff = 1773.42000008
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	1500		6.875			1090.327Kbit/s			38.125	1359006015	
+server_2	1	1500		8.179			916.493Kbit/s			41.821	1359006017	
+server_1	2	1500		9.928			755.036Kbit/s			45.072	1359006018	
+block 117  ->  3 timeDiff = 1783.37700009
+Server 	FragID 	Rate 		Down Dur 		Bandwidth 		BufferLength
+server_0	0	1500		6.875			1090.327Kbit/s			43.197	1359006025	
+server_2	1	1500		8.162			918.402Kbit/s			46.910	1359006027	
+server_1	2	1500		10.087			743.135Kbit/s			49.985	1359006029	
+block 118  ->  3 timeDiff = 1793.62199998
+0	300	1359004239.23900	3.375
+1	300	1359004239.44600	8.166
+2	300	1359004240.02400	12.651
+3	300	1359004241.60700	16.108
+4	300	1359004241.94200	20.772
+5	300	1359004242.32700	25.450
+6	300	1359004244.01100	28.807
+7	300	1359004244.36000	33.458
+8	300	1359004244.67700	38.200
+9	300	1359004246.21100	41.706
+10	300	1359004246.60300	46.313
+11	300	1359004247.07600	51.001
+12	700	1359004250.92200	52.190
+13	700	1359004251.61400	56.496
+14	700	1359004252.45100	60.774
+15	1500	1359004281.46400	36.813
+16	1500	1359004283.09300	40.173
+17	1500	1359004284.50600	43.763
+18	1500	1359004292.76100	40.552
+19	1500	1359004294.42800	43.882
+20	1500	1359004296.35900	47.262
+21	1500	1359004304.70700	43.952
+22	1500	1359004306.22700	47.430
+23	1500	1359004308.05600	50.811
+24	1500	1359004316.26000	47.651
+25	1500	1359004317.97700	50.933
+26	1500	1359004319.75900	54.361
+27	2500	1359004333.62700	45.532
+28	2500	1359004336.32900	47.828
+29	2500	1359004339.01000	50.460
+30	2500	1359004352.75700	41.756
+31	2500	1359004355.57900	43.931
+32	2500	1359004358.96100	45.859
+33	2500	1359004372.81000	37.048
+34	2500	1359004375.62900	39.226
+35	2500	1359004378.41100	41.659
+36	2500	1359004392.29900	32.817
+37	2500	1359004395.05300	35.062
+38	2500	1359004398.01300	37.407
+39	2500	1359004411.87700	28.579
+40	2500	1359004414.55400	30.901
+41	2500	1359004416.16100	34.606
+42	2500	1359004430.04600	25.768
+43	2500	1359004432.92500	27.878
+44	2500	1359004435.41100	31.105
+45	2500	1359004449.15900	22.394
+46	2500	1359004452.07600	24.476
+47	2500	1359004454.86000	27.806
+48	2500	1359004468.75300	18.960
+49	2500	1359004471.55300	21.159
+50	2500	1359004474.41400	24.406
+51	2500	1359004488.21000	15.661
+52	2500	1359004491.01700	17.853
+53	2500	1359004494.11300	21.004
+54	2500	1359004507.87000	12.300
+55	2500	1359004510.67300	14.484
+56	2500	1359004513.55900	17.754
+57	300	1359004515.11000	21.243
+58	300	1359004515.32900	26.022
+59	300	1359004517.65500	29.853
+60	300	1359004519.21700	33.340
+61	300	1359004519.53900	38.015
+62	300	1359004520.10700	42.652
+63	300	1359004521.76000	46.036
+64	300	1359004522.00000	50.795
+65	300	1359004522.45500	55.551
+66	1500	1359004530.69700	52.357
+67	1500	1359004532.44900	55.605
+68	1500	1359004534.05800	59.151
+69	2500	1359004547.95000	50.311
+70	2500	1359004550.65400	52.604
+71	2500	1359004551.91200	56.650
+72	2500	1359004565.74000	47.863
+73	2500	1359004568.43400	50.166
+74	2500	1359004571.46100	53.249
+75	3500	1359004590.79900	38.961
+76	3500	1359004594.89800	39.862
+77	3500	1359004597.27000	43.648
+78	3500	1359004616.66600	29.306
+79	3500	1359004620.67000	30.302
+80	3500	1359004624.36700	33.497
+81	3500	1359004643.81000	19.107
+82	3500	1359004647.80800	20.107
+83	3500	1359004651.71500	23.246
+84	3500	1359004671.12100	8.885
+85	3500	1359004675.09000	9.913
+86	3500	1359004679.01700	13.144
+87	300	1359004680.70300	16.503
+88	300	1359004680.95200	21.253
+89	300	1359004685.00600	24.294
+90	300	1359004686.69400	27.653
+91	300	1359004686.99800	32.348
+92	300	1359004687.37200	37.078
+93	300	1359004688.93100	40.551
+94	300	1359004689.13400	45.346
+95	300	1359004689.67100	49.877
+96	300	1359004691.34800	53.244
+97	300	1359004691.56100	58.021
+98	300	1359004691.97100	62.826
+99	1500	1359004723.14800	36.690
+100	1500	1359004724.64000	40.194
+101	1500	1359004726.07800	43.762
+102	1500	1359004734.43400	40.454
+103	1500	1359004735.97100	43.916
+104	1500	1359004737.77900	47.311
+105	1500	1359004746.11200	44.019
+106	1500	1359004747.63600	47.484
+107	1500	1359004749.52500	50.912
+108	1500	1359004757.76200	47.721
+109	1500	1359004759.41600	51.065
+110	1500	1359004761.22800	54.561
+111	2500	1359004775.12700	45.715
+112	2500	1359004777.84100	48.012
+113	2500	1359004780.83400	50.309
+114	2500	1359004794.73300	41.448
+115	2500	1359004797.47700	43.703
+116	2500	1359004800.43200	46.060
+117	2500	1359004814.28500	37.257
+118	2500	1359004816.95600	39.576
+119	2500	1359004819.93200	41.908
+120	2500	1359004833.82200	33.068
+121	2500	1359004836.64100	35.249
+122	2500	1359004839.43200	37.658
+123	2500	1359004853.30300	28.829
+124	2500	1359004856.10200	31.029
+125	2500	1359004859.03000	33.407
+126	2500	1359004872.89700	24.589
+127	2500	1359004875.71900	26.765
+128	2500	1359004878.60000	29.189
+129	2500	1359004892.47700	20.357
+130	2500	1359004895.17800	22.646
+131	2500	1359004898.09700	24.938
+132	2500	1359004911.99500	16.091
+133	2500	1359004914.79400	18.292
+134	2500	1359004916.59900	21.786
+135	2500	1359004930.37800	13.053
+136	2500	1359004933.26400	15.159
+137	2500	1359004935.59800	18.734
+138	300	1359004937.23300	22.132
+139	300	1359004937.46200	26.900
+140	300	1359004939.79200	30.834
+141	300	1359004941.45500	34.210
+142	300	1359004941.66300	39.000
+143	300	1359004942.14300	43.633
+144	300	1359004943.72800	47.091
+145	300	1359004944.00700	51.801
+146	300	1359004944.44200	56.533
+147	1500	1359004952.78000	53.240
+148	1500	1359004954.32200	56.697
+149	1500	1359004956.06700	60.161
+150	1500	1359004984.62100	36.658
+151	1500	1359004986.01300	40.264
+152	1500	1359004987.62000	43.650
+153	1500	1359004995.95500	40.358
+154	1500	1359004997.49900	43.811
+155	1500	1359004999.32100	47.150
+156	1500	1359005007.64400	43.860
+157	1500	1359005009.05500	47.447
+158	1500	1359005010.68800	51.129
+159	2500	1359005024.54900	42.305
+160	2500	1359005027.25300	44.600
+161	2500	1359005028.94300	48.478
+162	2500	1359005042.80500	39.654
+163	2500	1359005045.60600	41.850
+164	2500	1359005048.39200	45.327
+165	2500	1359005062.23900	36.528
+166	2500	1359005065.07500	38.693
+167	2500	1359005067.99700	42.026
+168	2500	1359005081.85600	33.216
+169	2500	1359005084.73700	35.335
+170	2500	1359005087.54800	38.772
+171	2500	1359005101.43600	29.931
+172	2500	1359005104.14000	32.227
+173	2500	1359005107.14400	35.470
+174	2500	1359005120.98500	26.673
+175	2500	1359005123.83600	28.823
+176	2500	1359005126.59400	32.219
+177	2500	1359005140.46300	23.395
+178	2500	1359005143.24200	25.613
+179	2500	1359005146.19100	28.919
+180	2500	1359005160.08800	20.071
+181	2500	1359005162.91700	22.239
+182	2500	1359005165.64300	25.768
+183	2500	1359005179.49600	16.965
+184	2500	1359005182.31500	19.137
+185	2500	1359005185.19300	22.517
+186	2500	1359005199.06800	13.683
+187	2500	1359005201.85600	15.888
+188	2500	1359005204.79100	19.215
+189	300	1359005206.46200	22.578
+190	300	1359005206.65100	27.386
+191	300	1359005208.88600	31.415
+192	300	1359005210.62500	34.718
+193	300	1359005210.72300	39.619
+194	300	1359005211.33800	44.166
+195	300	1359005213.00800	47.529
+196	300	1359005213.20300	52.333
+197	300	1359005213.63800	57.066
+198	1500	1359005221.88200	53.870
+199	1500	1359005223.64400	57.107
+200	1500	1359005225.26400	60.690
+201	1500	1359005254.24800	36.750
+202	1500	1359005255.88900	40.109
+203	1500	1359005257.32600	43.664
+204	1500	1359005265.66900	40.368
+205	1500	1359005267.16600	43.859
+206	1500	1359005269.02500	47.213
+207	1500	1359005277.22500	44.046
+208	1500	1359005278.86200	47.407
+209	1500	1359005280.77500	50.712
+210	1500	1359005289.09700	47.424
+211	1500	1359005290.61300	50.905
+212	1500	1359005292.17400	54.661
+215	2500	1359005305.03000	53.024
+213	2500	1359005306.05900	45.823
+214	2500	1359005308.85900	48.024
+218	2500	1359005320.35900	51.234
+216	2500	1359005322.71700	44.214
+217	2500	1359005325.79600	46.234
+221	3500	1359005341.96300	45.033
+219	3500	1359005345.21400	36.874
+220	3500	1359005347.25300	40.033
+223	3500	1359005363.32000	35.646
+222	3500	1359005366.68800	30.646
+224	3500	1359005371.14500	36.881
+226	3500	1359005387.20200	27.534
+225	3500	1359005390.54700	22.534
+227	3500	1359005394.94400	29.231
+228	3500	1359005410.99800	18.220
+229	3500	1359005414.28200	19.944
+230	3500	1359005418.49300	21.880
+231	3500	1359005434.54700	10.870
+232	3500	1359005437.76100	12.656
+233	3500	1359005442.19300	14.479
+234	300	1359005443.61900	18.092
+235	300	1359005443.84900	22.869
+236	300	1359005445.94100	26.879
+237	300	1359005447.39000	30.469
+238	300	1359005447.63500	35.232
+239	300	1359005447.98500	39.928
+240	300	1359005449.39900	43.555
+241	300	1359005449.64200	48.318
+242	300	1359005450.12500	52.943
+243	1500	1359005457.02400	51.079
+244	1500	1359005458.36800	54.733
+245	1500	1359005460.06900	58.092
+246	1500	1359005466.99500	56.204
+247	1500	1359005468.45700	59.751
+248	1500	1359005470.22600	63.191
+249	1500	1359005500.31700	38.141
+250	1500	1359005501.71200	41.753
+251	1500	1359005503.31000	45.153
+252	1500	1359005510.20600	43.292
+253	1500	1359005511.59900	46.909
+254	1500	1359005513.49900	50.214
+255	2500	1359005524.98300	43.778
+256	2500	1359005527.26400	46.503
+257	2500	1359005530.40400	48.562
+258	2500	1359005541.89900	42.106
+259	2500	1359005544.15900	44.846
+260	2500	1359005547.35700	46.850
+261	2500	1359005558.83500	40.416
+262	2500	1359005561.22100	43.039
+263	2500	1359005564.26200	45.100
+264	2500	1359005575.74100	38.663
+265	2500	1359005578.13000	41.283
+266	2500	1359005581.15200	43.461
+267	2500	1359005592.61500	37.040
+268	2500	1359005595.03700	39.622
+269	2500	1359005597.55400	42.308
+270	2500	1359005609.03300	35.875
+271	2500	1359005611.41900	38.486
+272	2500	1359005614.04700	41.407
+273	2500	1359005625.47900	35.016
+274	2500	1359005627.93800	37.568
+275	2500	1359005631.04500	40.257
+276	2500	1359005642.50800	33.834
+277	2500	1359005644.92700	36.424
+278	2500	1359005647.79500	39.206
+279	2500	1359005659.29600	32.746
+280	2500	1359005661.68300	35.364
+281	2500	1359005664.65300	38.155
+282	2500	1359005676.15400	31.695
+283	2500	1359005678.51100	34.346
+284	2500	1359005681.54600	37.104
+285	2500	1359005693.05100	30.644
+286	2500	1359005695.41000	33.292
+287	2500	1359005698.39800	36.053
+288	2500	1359005709.86600	29.629
+289	2500	1359005712.26000	32.242
+290	2500	1359005715.25400	35.001
+291	2500	1359005726.73000	28.563
+292	2500	1359005729.12600	31.166
+293	2500	1359005732.09700	33.999
+294	2500	1359005743.59400	27.539
+295	2500	1359005745.97900	30.162
+296	2500	1359005748.99700	32.948
+297	2500	1359005760.49600	26.488
+298	2500	1359005762.88800	29.107
+299	2500	1359005765.95300	31.947
+300	2500	1359005777.46700	25.474
+301	2500	1359005779.81500	28.125
+302	2500	1359005783.34500	30.397
+303	2500	1359005794.91200	23.873
+304	2500	1359005797.20600	26.586
+305	2500	1359005799.70200	29.497
+306	2500	1359005811.20600	23.036
+307	2500	1359005813.56400	25.686
+308	2500	1359005816.54600	28.446
+309	2500	1359005828.05900	21.972
+310	2500	1359005830.38700	24.652
+311	2500	1359005833.39600	27.394
+312	2500	1359005844.85700	20.971
+313	2500	1359005847.27900	23.556
+314	2500	1359005850.24600	26.393
+315	2500	1359005861.72300	19.955
+316	2500	1359005864.06200	22.614
+317	2500	1359005867.24700	25.241
+318	2500	1359005878.75000	18.781
+319	2500	1359005881.04200	21.500
+320	2500	1359005884.00100	24.341
+321	2500	1359005895.50300	17.880
+322	2500	1359005897.86700	20.517
+323	2500	1359005900.99600	23.291
+324	2500	1359005912.46500	16.867
+325	2500	1359005914.75800	19.580
+326	2500	1359005917.85200	22.240
+327	2500	1359005929.33200	15.802
+328	2500	1359005931.60500	18.538
+329	2500	1359005934.69600	21.188
+330	2500	1359005946.16900	14.751
+331	2500	1359005948.42100	17.499
+332	2500	1359005951.54600	20.187
+333	2500	1359005963.03000	13.750
+334	2500	1359005965.29400	16.491
+335	2500	1359005968.55600	19.034
+336	700	1359005971.80300	20.822
+337	700	1359005972.44000	25.191
+338	700	1359005974.24800	29.134
+339	700	1359005977.49100	30.921
+340	700	1359005978.22100	35.200
+341	700	1359005978.84100	39.634
+342	700	1359005982.08700	41.423
+343	700	1359005982.72400	45.792
+344	700	1359005983.59900	50.131
+345	700	1359005986.81900	51.942
+346	700	1359005987.43000	56.340
+347	700	1359005988.49200	60.479
+348	1500	1359006015.88100	38.125
+349	1500	1359006017.18400	41.821
+350	1500	1359006018.93200	45.072
+351	1500	1359006025.84400	43.197
+352	1500	1359006027.13700	46.910
+353	1500	1359006029.17500	49.985
+####################################
+0	2	636.867
+0	5	679.691
+0	8	664.889
+0	11	680.309
+0	14	668.835
+0	17	667.082
+0	20	651.769
+0	23	654.615
+0	26	654.672
+0	29	661.129
+0	32	637.518
+0	35	650.833
+0	38	649.075
+0	41	701.983
+0	44	675.423
+0	47	682.879
+0	50	679.130
+0	53	679.057
+0	56	684.712
+0	59	515.684
+0	62	679.691
+0	65	712.042
+0	68	657.544
+0	71	714.016
+0	74	679.094
+0	77	711.191
+0	80	695.638
+0	83	692.883
+0	86	696.996
+0	89	388.571
+0	92	675.090
+0	95	679.691
+0	98	729.400
+0	101	667.023
+0	104	654.615
+0	107	657.602
+0	110	660.382
+0	113	649.075
+0	116	649.177
+0	119	652.464
+0	122	649.143
+0	125	649.109
+0	128	650.224
+0	131	649.109
+0	134	688.409
+0	137	692.222
+0	140	515.862
+0	143	679.691
+0	146	712.381
+0	149	659.163
+0	152	660.441
+0	155	651.826
+0	158	680.156
+0	161	707.949
+0	164	688.447
+0	167	682.804
+0	170	684.562
+0	173	682.767
+0	176	684.675
+0	179	682.842
+0	182	688.447
+0	185	684.675
+0	188	682.767
+0	191	534.286
+0	194	665.185
+0	197	712.381
+0	200	658.931
+0	203	661.256
+0	206	654.615
+0	209	651.769
+0	212	678.310
+0	215	1007.661
+0	218	1090.401
+0	221	1085.360
+0	223	1091.930
+0	226	1092.817
+0	228	1092.749
+0	231	1092.817
+0	234	1078.587
+0	237	1060.993
+0	240	1089.585
+0	243	1092.075
+0	246	1088.269
+0	249	1092.871
+0	252	1092.552
+0	255	1092.690
+0	258	1090.782
+0	261	1092.881
+0	264	1092.594
+0	267	1094.125
+0	270	1092.976
+0	273	1097.006
+0	276	1093.933
+0	279	1090.401
+0	282	1090.401
+0	285	1090.401
+0	288	1093.838
+0	291	1092.499
+0	294	1090.401
+0	297	1090.401
+0	300	1089.166
+0	303	1084.346
+0	306	1090.306
+0	309	1089.071
+0	312	1093.933
+0	315	1092.499
+0	318	1090.401
+0	321	1090.306
+0	324	1093.838
+0	327	1092.499
+0	330	1092.594
+0	333	1092.594
+0	336	1088.418
+0	339	1088.080
+0	342	1088.757
+0	345	1096.268
+0	348	1090.327
+0	351	1090.327
+0	354	1092.234
+####################################
+2	0	920.615
+2	3	969.540
+2	6	910.530
+2	9	1001.339
+2	12	917.345
+2	15	915.598
+2	18	912.922
+2	21	902.046
+2	24	918.627
+2	27	903.608
+2	30	911.851
+2	33	904.786
+2	36	902.760
+2	39	903.674
+2	42	903.021
+2	45	911.385
+2	48	902.499
+2	51	909.131
+2	54	911.851
+2	57	990.073
+2	60	988.764
+2	63	925.743
+2	66	914.816
+2	69	902.890
+2	72	906.361
+2	75	907.092
+2	78	904.560
+2	81	902.321
+2	84	903.672
+2	87	911.639
+2	90	911.639
+2	93	979.699
+2	96	916.105
+2	99	902.046
+2	102	902.263
+2	105	904.004
+2	108	915.151
+2	111	902.499
+2	114	901.522
+2	117	905.310
+2	120	902.890
+2	123	903.608
+2	126	904.328
+2	129	903.412
+2	132	902.434
+2	135	909.925
+2	138	933.833
+2	141	921.182
+2	144	970.169
+2	147	903.895
+2	150	898.585
+2	153	904.004
+2	156	904.222
+2	159	903.935
+2	162	903.935
+2	165	905.573
+2	168	904.852
+2	171	902.825
+2	174	905.704
+2	177	903.935
+2	180	902.369
+2	183	905.310
+2	186	903.282
+2	189	913.867
+2	192	881.556
+2	195	913.867
+2	198	914.592
+2	201	908.606
+2	204	903.568
+2	207	917.840
+2	210	904.440
+2	213	903.021
+2	216	904.852
+2	219	903.719
+2	222	902.460
+2	225	904.326
+2	229	907.140
+2	232	910.112
+2	235	929.193
+2	238	908.318
+2	241	929.193
+2	244	913.033
+2	247	898.693
+2	250	908.937
+2	253	909.267
+2	256	911.385
+2	259	911.053
+2	262	904.786
+2	265	904.393
+2	268	902.955
+2	271	904.066
+2	274	902.955
+2	277	903.347
+2	280	902.760
+2	283	904.917
+2	286	904.721
+2	289	904.786
+2	292	903.216
+2	295	903.086
+2	298	902.825
+2	301	904.066
+2	304	904.786
+2	307	904.786
+2	310	905.901
+2	313	903.021
+2	316	906.887
+2	319	909.395
+2	322	903.935
+2	325	911.385
+2	328	911.984
+2	331	912.850
+2	334	912.383
+2	337	909.706
+2	340	888.663
+2	343	909.943
+2	346	922.184
+2	349	916.493
+2	352	918.402
+####################################
+1	1	815.703
+1	4	796.168
+1	7	751.004
+1	10	792.793
+1	13	776.027
+1	16	762.796
+1	19	758.628
+1	22	762.408
+1	25	758.858
+1	28	755.822
+1	31	756.005
+1	34	751.278
+1	37	752.907
+1	40	757.058
+1	43	747.011
+1	46	751.458
+1	49	750.646
+1	52	754.908
+1	55	756.416
+1	58	863.741
+1	61	813.928
+1	64	805.600
+1	67	753.670
+1	70	755.182
+1	73	758.068
+1	76	748.108
+1	79	749.422
+1	82	748.012
+1	85	749.839
+1	88	791.116
+1	91	768.756
+1	94	863.741
+1	97	806.034
+1	100	764.430
+1	103	761.324
+1	106	762.796
+1	109	761.247
+1	112	755.091
+1	115	752.499
+1	118	758.068
+1	121	750.105
+1	124	751.458
+1	127	750.871
+1	130	755.365
+1	133	750.691
+1	136	751.549
+1	139	815.703
+1	142	815.703
+1	145	816.594
+1	148	762.098
+1	151	769.926
+1	154	761.866
+1	157	772.545
+1	160	756.005
+1	163	751.503
+1	166	751.232
+1	169	748.667
+1	172	755.273
+1	175	750.646
+1	178	752.499
+1	181	749.161
+1	184	751.368
+1	187	751.458
+1	190	817.933
+1	193	832.962
+1	196	816.148
+1	199	752.686
+1	202	757.861
+1	205	764.508
+1	208	764.430
+1	211	764.352
+1	214	751.097
+1	217	744.253
+1	220	825.244
+1	224	755.701
+1	227	772.450
+1	230	782.784
+1	233	781.037
+1	236	575.385
+1	239	766.786
+1	242	753.652
+1	245	760.938
+1	248	757.095
+1	251	761.247
+1	254	754.201
+1	257	750.420
+1	260	747.726
+1	263	746.030
+1	266	751.007
+1	269	773.602
+1	272	785.863
+1	275	773.746
+1	278	778.518
+1	281	778.518
+1	284	778.518
+1	287	778.518
+1	290	778.470
+1	293	780.902
+1	296	778.518
+1	299	780.951
+1	302	755.045
+1	305	785.912
+1	308	778.518
+1	311	778.470
+1	314	780.951
+1	317	773.650
+1	320	785.912
+1	323	778.567
+1	326	778.518
+1	329	778.470
+1	332	780.951
+1	335	773.602
+1	338	713.469
+1	341	776.889
+1	344	776.371
+1	347	751.505
+1	350	755.036
+1	353	743.135
+####################################

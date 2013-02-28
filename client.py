@@ -14,7 +14,8 @@ from threading import Thread
 
 sockIndex = 1
 #serverList = [['42.121.132.130',1234],['42.121.14.186',1234],['42.121.14.193',1234],['60.28.160.80',1234],['sh.idcst.cn',1234],['49.212.204.220',1234],['sh.idcst.cn',1234]]
-serverList = [['42.121.132.130',1234],['42.121.14.186',1234],['42.121.125.177',1234],['60.28.160.80',1234],['sh.idcst.cn',1234],['49.212.204.220',1234],['sh.idcst.cn',1234]]
+#serverList = [['42.121.14.193',12345],['42.121.14.186',1234],['42.121.125.177',12345],['60.28.160.80',1234],['sh.idcst.cn',1234],['49.212.204.220',1234],['sh.idcst.cn',1234]]
+serverList = [['plab1.cs.ust.hk',1234],['planetlab2.cqupt.edu.cn',1234],['planetlab-1.sjtu.edu.cn',1234],['plink.cs.uwaterloo.ca',1234],['planetlab1.cs.colorado.edu',1234],['151.97.9.224',1234]]
 #serverList = [['127.0.0.1',1234],['127.0.0.1',1235],['127.0.0.1',1236]]
 serverLimit = [62.5* 8 * 1024,125* 8 * 1024,187.5* 8 * 1024]
 
@@ -41,7 +42,7 @@ sleepTime = 40
 cut = 8
 kP = 0.4
 kD = 0.8
-maxTime = 7200
+maxTime = 3600 * 0.5
 
 slist = None
 
@@ -476,23 +477,26 @@ class serverConnect(Thread):
         so = "SEND" + "%d" % rate
         self.conn.send(so)
         while 1:
-            if total_data and time()-begin > timeout:
-                break
-            elif time()-begin > timeout*2:
-                break
-            elif recvLen>=dataPacket[rate-1]:
+            #if total_data and time()-begin > timeout:
+            #    break
+            #elif time()-begin > timeout*2:
+            #    break
+            if recvLen>=dataPacket[rate-1]:
                 break
             try:
-                while recvLen<dataPacket[rate-1]:
-                    data = self.conn.recv(dataPacket[rate-1])
-                    if data:
-                        total_data.append(data)
-                        recvLen = recvLen + len(data)
-                        begin = time()
+                #while recvLen<dataPacket[rate-1]:
+                data = self.conn.recv(dataPacket[rate-1])
+                if len(data)>0:
+                    total_data.append(data)
+                    recvLen = recvLen + len(data)
+                    begin = time()
+                else:
+                    self.conn.send(so)
                 #else:
                 #    time.sleep(0.01)
             except:
                 pass
+                #break
         #print 'length =' , recvLen,', time =' , dur, 'bw =' , recvLen/8/dur
         dur = time() - start
         return recvLen,dur
